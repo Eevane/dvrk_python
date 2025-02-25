@@ -253,25 +253,34 @@ class teleoperation:
 
         #########################################33
         self.f = self.get_current_force()
-        force = 0.15*PyKDL.Vector(self.f[0], self.f[1], self.f[2])
-        torch = 0.15*PyKDL.Vector(self.f[3], self.f[4], self.f[5])
+        # if numpy.linalg.norm([self.f[0], self.f[1], self.f[0]]) < 1.5:
+        #     self.f = [0, 0, 0, 0, 0, 0]
+        force = -1*PyKDL.Vector(self.f[0], self.f[1], self.f[2])
+        torch = 0*PyKDL.Vector(self.f[3], self.f[4], self.f[5])
         # print('force:', force)
         # print('torch:', torch)
 
         master_position_f = self.master.measured_cp()[0]
         #puppet_position_f = self.puppet.measured_cp()[0]
         puppet_position_f = self.puppet.measured_cp()[0]
-        # R_P2M = master_position_f.M.Inverse() * puppet_position_f.M
-        P_P2M = master_position_f.M.Inverse() * (puppet_position_f.p - master_position_f.p)
-        R_P2M = master_position_f.M.Inverse() * puppet_position_f.M 
         
+        P_M2P = master_position_f.M.Inverse() * (puppet_position_f.p - master_position_f.p)
+        R_M2P = master_position_f.M.Inverse() * puppet_position_f.M 
+
+
+        R_P2M = puppet_position_f.M.Inverse() * master_position_f.M 
+        P_P2M = puppet_position_f.M.Inverse() * (master_position_f.p - puppet_position_f.p)
+        
+        Transform_M2P = PyKDL.Frame(R_M2P, P_M2P)
         Transform_P2M = PyKDL.Frame(R_P2M, P_P2M)
 
-        force_M = Transform_P2M.M * force
-        torch_M = Transform_P2M.M * torch
+        force_M = Transform_M2P.M * force
+        torch_M = Transform_M2P.M * torch
+        # force_M = Transform_P2M.M * force
+        # torch_M = Transform_P2M.M * torch
         wrench_M = [force_M[0], force_M[1], force_M[2], torch_M[0], torch_M[1], torch_M[2]]
-        #wrench_M = [force_M, torch_M]
-        #wrench_M = force_M.extend(torch_M)
+        # wrench_M = [force_M, torch_M]
+        # wrench_M = force_M.extend(torch_M)
         if self.count == 0 :
             print(f"force_p :{force} \n")
             print(f"Transform_P2M.M : {Transform_P2M.M} \n")
@@ -283,6 +292,7 @@ class teleoperation:
             
         self.count -= 1
         self.master.body.servo_cf(wrench_M)
+        #print(self.f)
 
 
 
@@ -456,6 +466,7 @@ class PSM:
         self.utils.add_operating_state()
         self.utils.add_setpoint_cp()
         self.utils.add_servo_cp()
+        self.utils.add_servo_cs()
         self.utils.add_hold()
         # self.utils.add_measured_cf(self.ral.create_child('spatial'), timeout)
         ###########################
@@ -493,8 +504,8 @@ if __name__ == '__main__':
     args = parser.parse_args(argv)
 
     ral = crtk.ral('dvrk_python_teleoperation')
-    mtm = MTM(ral, args.mtm, timeout=4*args.interval)
-    psm = PSM(ral, args.psm, timeout=4*args.interval)
+    mtm = MTM(ral, args.mtm, timeout=10*args.interval)
+    psm = PSM(ral, args.psm, timeout=10*args.interval)
     application = teleoperation(ral, mtm, psm, args.clutch, args.interval,
                                 not args.no_mtm_alignment, operator_present_topic=args.operator)
     ral.spin_and_execute(application.run)
