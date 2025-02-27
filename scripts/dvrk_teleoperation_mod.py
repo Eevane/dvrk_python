@@ -252,47 +252,53 @@ class teleoperation:
 
 
         #########################################33
+        # Force measurement
         self.f = self.get_current_force()
-        # if numpy.linalg.norm([self.f[0], self.f[1], self.f[0]]) < 1.5:
-        #     self.f = [0, 0, 0, 0, 0, 0]
-        force = -1*PyKDL.Vector(self.f[0], self.f[1], self.f[2])
+        force = -0.5*PyKDL.Vector(self.f[0], self.f[1], self.f[2])
         torch = 0*PyKDL.Vector(self.f[3], self.f[4], self.f[5])
         # print('force:', force)
         # print('torch:', torch)
 
+        # Velocity measurement
+        puppet_velocity = self.puppet.measured_cv()[0] * (0.5)
+        linear_vel = PyKDL.Vector(puppet_velocity[0], puppet_velocity[1], puppet_velocity[2])
+        angular_vel = 0.5 * PyKDL.Vector(puppet_velocity[3], puppet_velocity[4], puppet_velocity[5])
+
+
+
         master_position_f = self.master.measured_cp()[0]
-        #puppet_position_f = self.puppet.measured_cp()[0]
         puppet_position_f = self.puppet.measured_cp()[0]
-        
+
+
         P_M2P = master_position_f.M.Inverse() * (puppet_position_f.p - master_position_f.p)
         R_M2P = master_position_f.M.Inverse() * puppet_position_f.M 
 
-
-        R_P2M = puppet_position_f.M.Inverse() * master_position_f.M 
-        P_P2M = puppet_position_f.M.Inverse() * (master_position_f.p - puppet_position_f.p)
-        
         Transform_M2P = PyKDL.Frame(R_M2P, P_M2P)
-        Transform_P2M = PyKDL.Frame(R_P2M, P_P2M)
 
         force_M = Transform_M2P.M * force
         torch_M = Transform_M2P.M * torch
-        # force_M = Transform_P2M.M * force
-        # torch_M = Transform_P2M.M * torch
+
+        linear_vel_M = linear_vel
+        angular_vel_M = angular_vel
+
         wrench_M = [force_M[0], force_M[1], force_M[2], torch_M[0], torch_M[1], torch_M[2]]
-        # wrench_M = [force_M, torch_M]
-        # wrench_M = force_M.extend(torch_M)
+        velocity_M = [linear_vel_M[0], linear_vel_M[1], linear_vel_M[2], angular_vel_M[0], angular_vel_M[1], angular_vel_M[2]]
+
+        # position_M = Transform_M2P * puppet_position_f
         if self.count == 0 :
             print(f"force_p :{force} \n")
-            print(f"Transform_P2M.M : {Transform_P2M.M} \n")
+            print(f"Transform_M2P.M : {Transform_M2P.M} \n")
             # print(f"force_M: {force_M} \n")
             # print(f"torch_M: {torch_M} \n")
             print(f"wrench_M: {wrench_M} ")
+            print(f"velocity_M: {velocity_M} ")
             print('#'*60)
             self.count = 400
-            
         self.count -= 1
-        self.master.body.servo_cf(wrench_M)
+        # self.master.servo_cs(None, None, wrench_M)
+        self.master.servo_cs(puppet_position_f, velocity_M, wrench_M)
         #print(self.f)
+        
 
 
 
@@ -413,6 +419,7 @@ class MTM:
         self.utils.add_measured_cp()
         self.utils.add_setpoint_cp()
         self.utils.add_move_cp()
+        self.utils.add_servo_cs()
         
 
         self.gripper = self.Gripper(self.ral.create_child('gripper'), timeout)
@@ -468,6 +475,7 @@ class PSM:
         self.utils.add_servo_cp()
         self.utils.add_servo_cs()
         self.utils.add_hold()
+        self.utils.add_measured_cv()
         # self.utils.add_measured_cf(self.ral.create_child('spatial'), timeout)
         ###########################
         self.body = self.MeasureCF(self.ral.create_child('body'), timeout)
