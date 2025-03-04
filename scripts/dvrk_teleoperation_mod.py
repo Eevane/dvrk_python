@@ -74,9 +74,16 @@ class teleoperation:
         self.clutch_button = crtk.joystick_button(ral, clutch_topic)
         self.clutch_button.set_callback(self.on_clutch)
 
-    def get_current_force(self):
+    def get_PSM_current_force(self):
         f = self.puppet.body.measured_cf()[0]
         return f
+    def get_MTM_current_force(self):
+        f_m = self.master.body.measured_cf()[0]
+        return f_m
+
+    def filter(self, alpha, oldData):
+        nowOutData = alpha * self.f + (1 - alpha) * oldData
+        return nowOutData 
 
     # callback for operator pedal/button
     def on_operator_present(self, present):
@@ -253,16 +260,22 @@ class teleoperation:
 
         #########################################33
         # Force measurement
-        self.f = self.get_current_force()
-        force = -0.5*PyKDL.Vector(self.f[0], self.f[1], self.f[2])
-        torch = 0*PyKDL.Vector(self.f[3], self.f[4], self.f[5])
+        self.f_P = self.get_PSM_current_force()
+        self.f_M = self.get_MTM_current_force()
+
+        force = -1*PyKDL.Vector(self.f_P[0], self.f_P[1], self.f_P[2])
+        torch = 0*PyKDL.Vector(self.f_P[3], self.f_P[4], self.f_P[5])
+
+        force_M = 0*PyKDL.Vector(self.f_M[0], self.f_M[1], self.f_M[2])
+        torch_M = 0*PyKDL.Vector(self.f_M[3], self.f_M[4], self.f_M[5])
+
         # print('force:', force)
         # print('torch:', torch)
 
         # Velocity measurement
-        puppet_velocity = self.puppet.measured_cv()[0] * (0.5)
+        puppet_velocity = self.puppet.measured_cv()[0] 
         linear_vel = PyKDL.Vector(puppet_velocity[0], puppet_velocity[1], puppet_velocity[2])
-        angular_vel = 0.5 * PyKDL.Vector(puppet_velocity[3], puppet_velocity[4], puppet_velocity[5])
+        angular_vel = 0 * PyKDL.Vector(puppet_velocity[3], puppet_velocity[4], puppet_velocity[5])
 
 
 
@@ -275,28 +288,48 @@ class teleoperation:
 
         Transform_M2P = PyKDL.Frame(R_M2P, P_M2P)
 
-        force_M = Transform_M2P.M * force
-        torch_M = Transform_M2P.M * torch
+        force_P2M = Transform_M2P.M * force
+        torch_P2M = Transform_M2P.M * torch
 
-        linear_vel_M = linear_vel
-        angular_vel_M = angular_vel
+        linear_vel_P2M =  linear_vel
+        angular_vel_P2M =  angular_vel
+
+        wrench_P2M = [force_P2M[0], force_P2M[1], force_P2M[2], torch_P2M[0], torch_P2M[1], torch_P2M[2]]
+        velocity_P2M = [linear_vel_P2M[0], linear_vel_P2M[1], linear_vel_P2M[2], angular_vel_P2M[0], angular_vel_P2M[1], angular_vel_P2M[2]]
 
         wrench_M = [force_M[0], force_M[1], force_M[2], torch_M[0], torch_M[1], torch_M[2]]
-        velocity_M = [linear_vel_M[0], linear_vel_M[1], linear_vel_M[2], angular_vel_M[0], angular_vel_M[1], angular_vel_M[2]]
+
+        f_servoCS = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        length = len(wrench_M)
+        for i in range(length):
+            f_servoCS[i] = wrench_M[i] + wrench_P2M[i]
 
         # position_M = Transform_M2P * puppet_position_f
         if self.count == 0 :
-            print(f"force_p :{force} \n")
-            print(f"Transform_M2P.M : {Transform_M2P.M} \n")
+            # print(f"force_p :{force} \n")
+            # print(f"Transform_M2P.M : {Transform_M2P.M} \n")
             # print(f"force_M: {force_M} \n")
-            # print(f"torch_M: {torch_M} \n")
+            # # print(f"torch_M: {torch_M} \n")
             print(f"wrench_M: {wrench_M} ")
-            print(f"velocity_M: {velocity_M} ")
+            print(f"wrench_P2M: {wrench_P2M} ")
+            print(f"f_servoCS: {f_servoCS} ")
+            # print(f"velocity_M: {velocity_M} ")
             print('#'*60)
+            # print(f"f_servoCS: {f_servoCS}")
             self.count = 400
         self.count -= 1
+        #self.master.body.servo_cf(wrench_P2M)
         # self.master.servo_cs(None, None, wrench_M)
-        self.master.servo_cs(puppet_position_f, velocity_M, wrench_M)
+        # self.master.servo_cs(None, None, [0.0,0.0,1.0,0.0,0.0,0.0])
+
+        puppet_relative_translation = puppet_position_f.p - self.puppet_cartesian_initial.p
+        master_relative_translation = puppet_relative_translation / self.scale
+        master_translation = master_relative_translation + self.master_cartesian_initial.p
+
+        master_rotation = puppet_position_f.M * alignment_offset.Inverse()
+
+        master_cartesian_goal = PyKDL.Frame(master_rotation, master_translation)
+        self.master.servo_cs(master_cartesian_goal, velocity_P2M, f_servoCS)
         #print(self.f)
         
 
@@ -400,10 +433,12 @@ class teleoperation:
             teleop_rate.sleep()
 
 class MTM:
-    class ServoCF:
+            
+    class ServoMeasCF:
         def __init__(self, ral, timeout):
             self.utils = crtk.utils(self, ral, timeout)
             self.utils.add_servo_cf()
+            self.utils.add_measured_cf()
 
     class Gripper:
         def __init__(self, ral, timeout):
@@ -420,10 +455,9 @@ class MTM:
         self.utils.add_setpoint_cp()
         self.utils.add_move_cp()
         self.utils.add_servo_cs()
-        
 
         self.gripper = self.Gripper(self.ral.create_child('gripper'), timeout)
-        self.body = self.ServoCF(self.ral.create_child('body'), timeout)
+        self.body = self.ServoMeasCF(self.ral.create_child('body'), timeout)
 
         # non-CRTK topics
         self.lock_orientation_pub = self.ral.publisher('lock_orientation',
@@ -507,7 +541,7 @@ if __name__ == '__main__':
                         help = 'ROS topic corresponding to operator present button/pedal/sensor input - use "-o" without an argument to disable')
     parser.add_argument('-n', '--no-mtm-alignment', action='store_true',
                         help="don't align mtm (useful for using haptic devices as MTM which don't have wrist actuation)")
-    parser.add_argument('-i', '--interval', type=float, default=0.005,
+    parser.add_argument('-i', '--interval', type=float, default=0.0025,
                         help = 'time interval/period to run at - should be as long as console\'s period to prevent timeouts')
     args = parser.parse_args(argv)
 

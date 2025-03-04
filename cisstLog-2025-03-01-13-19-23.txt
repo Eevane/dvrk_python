@@ -1,0 +1,3 @@
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+-W Class cmnPath: Couldn't find file "console-MTML-PSM2-Teleop.json" in path /home/pshao7/dvrk_python_devel/dvrk_python_devel/dvrk_python;/home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share;/usr/share/sawIntuitiveResearchKit/share
