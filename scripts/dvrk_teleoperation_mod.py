@@ -225,7 +225,7 @@ class teleoperation:
             self.enter_clutched()
 
     def run_following(self):
-        # let arm move freely
+        ''' # let arm move freely
         wrench = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.master.body.servo_cf(wrench)
 
@@ -256,6 +256,8 @@ class teleoperation:
         # move ghost at most max_delta towards current gripper
         self.gripper_ghost += math.copysign(min(abs(ghost_lag), max_delta), ghost_lag)
         self.puppet.jaw.servo_jp(numpy.array([self.gripper_to_jaw(self.gripper_ghost)]))
+
+
 
 
         #########################################33
@@ -291,8 +293,8 @@ class teleoperation:
         force_P2M = Transform_M2P.M * force
         torch_P2M = Transform_M2P.M * torch
 
-        linear_vel_P2M =  linear_vel
-        angular_vel_P2M =  angular_vel
+        linear_vel_P2M =  Transform_M2P.M.Inverse() * linear_vel
+        angular_vel_P2M =  Transform_M2P.M.Inverse() * angular_vel
 
         wrench_P2M = [force_P2M[0], force_P2M[1], force_P2M[2], torch_P2M[0], torch_P2M[1], torch_P2M[2]]
         velocity_P2M = [linear_vel_P2M[0], linear_vel_P2M[1], linear_vel_P2M[2], angular_vel_P2M[0], angular_vel_P2M[1], angular_vel_P2M[2]]
@@ -358,7 +360,163 @@ class teleoperation:
         # print('adj:', adj)
         # master_force = 2*(adj @ self.f)
         # print(master_force)
-        # # self.master.servo_cf(master_force)
+        # # self.master.servo_cf(master_force)'''
+
+        #########################################33                  
+        # let arm move freely
+        #wrench = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        #self.master.body.servo_cf(wrench)
+
+	    #Position
+        ### Cartesian pose teleop
+        master_position = self.master.measured_cp()[0]
+        puppet_position_f = self.puppet.measured_cp()[0]
+        
+        # translation
+        master_translation = master_position.p - self.master_cartesian_initial.p
+        puppet_translation = master_translation * self.scale
+        puppet_translation = puppet_translation + self.puppet_cartesian_initial.p
+
+        # set rotation of psm to match mtm plus alignment offset
+        # if we can actuate the MTM, we slowly reduce the alignment offset to zero over time
+        max_delta = self.align_rate * self.run_period
+        self.offset_angle += math.copysign(min(abs(self.offset_angle), max_delta), -self.offset_angle)
+        alignment_offset = PyKDL.Rotation.Rot(self.offset_axis, self.offset_angle)
+        puppet_rotation = master_position.M * alignment_offset
+
+        puppet_cartesian_goal = PyKDL.Frame(puppet_rotation, puppet_translation)
+        
+        #force
+        ### Force measurement
+        self.f_P_FW = self.get_PSM_current_force()
+        self.f_M_FW = self.get_MTM_current_force()
+        
+        force_P_FW = -0.5*PyKDL.Vector(self.f_P_FW[0], self.f_P_FW[1], self.f_P_FW[2])
+        torch_P_FW = 0*PyKDL.Vector(self.f_P_FW[3], self.f_P_FW[4], self.f_P_FW[5])
+
+        force_M_FW = 0*PyKDL.Vector(self.f_M_FW[0], self.f_M_FW[1], self.f_M_FW[2])
+        torch_M_FW = 0*PyKDL.Vector(self.f_M_FW[3], self.f_M_FW[4], self.f_M_FW[5])
+        
+        #force_P2M = Transform_M2P.M * force
+        #torch_P2M = Transform_M2P.M * torch
+        force_M2P = force_P_FW
+        torch_M2P = torch_P_FW
+        
+        wrench_M2P = [force_M2P[0], force_M2P[1], force_M2P[2], torch_M2P[0], torch_M2P[1], torch_M2P[2]]
+	
+        wrench_P = [force_P_FW[0], force_P_FW[1], force_P_FW[2], torch_P_FW[0], torch_P_FW[1], torch_P_FW[2]]
+
+        f_servoCS_FW = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        length = len(wrench_P)
+        for i in range(length):
+            f_servoCS_FW[i] = wrench_P[i] + wrench_M2P[i]
+
+ 
+        #Velocity
+        ### Velocity measurement
+        master_velocity = self.master.measured_cv()[0] 
+        linear_vel_FW = self.scale * PyKDL.Vector(master_velocity[0], master_velocity[1], master_velocity[2])
+        angular_vel_FW = PyKDL.Vector(master_velocity[3], master_velocity[4], master_velocity[5])
+
+        linear_vel_M2P = linear_vel_FW
+        angular_vel_M2P = angular_vel_FW
+        velocity_M2P = [linear_vel_M2P[0], linear_vel_M2P[1], linear_vel_M2P[2], angular_vel_M2P[0], angular_vel_M2P[1], angular_vel_M2P[2]]
+
+        # P_M2P = master_position_f.M.Inverse() * (puppet_position_f.p - master_position_f.p)
+        # R_M2P = master_position_f.M.Inverse() * puppet_position_f.M 
+        # Transform_M2P = PyKDL.Frame(R_M2P, P_M2P)
+        
+
+	    #Move
+        self.puppet.servo_cs(puppet_cartesian_goal, velocity_M2P, f_servoCS_FW)
+        # self.puppet.servo_cp(puppet_cartesian_goal)
+
+        ### Jaw/gripper teleop
+        gripper_measured_js = self.master.gripper.measured_js()
+        current_gripper = gripper_measured_js[0][0]
+
+        ghost_lag = current_gripper - self.gripper_ghost
+        max_delta = self.jaw_rate * self.run_period
+        # move ghost at most max_delta towards current gripper
+        self.gripper_ghost += math.copysign(min(abs(ghost_lag), max_delta), ghost_lag)
+        self.puppet.jaw.servo_jp(numpy.array([self.gripper_to_jaw(self.gripper_ghost)]))
+        
+        
+        
+        
+        
+        
+        
+        # Force measurement
+        self.f_P = self.get_PSM_current_force()
+        self.f_M = self.get_MTM_current_force()
+
+        force = -1*PyKDL.Vector(self.f_P[0], self.f_P[1], self.f_P[2])
+        torch = 0*PyKDL.Vector(self.f_P[3], self.f_P[4], self.f_P[5])
+
+        force_M = 0*PyKDL.Vector(self.f_M[0], self.f_M[1], self.f_M[2])
+        torch_M = 0*PyKDL.Vector(self.f_M[3], self.f_M[4], self.f_M[5])
+
+        # print('force:', force)
+        # print('torch:', torch)
+
+        # Velocity measurement
+        puppet_velocity = self.puppet.measured_cv()[0] 
+        linear_vel = (1.0 / self.scale) * PyKDL.Vector(puppet_velocity[0], puppet_velocity[1], puppet_velocity[2])
+        angular_vel = PyKDL.Vector(puppet_velocity[3], puppet_velocity[4], puppet_velocity[5])
+
+        master_position_f = self.master.measured_cp()[0]
+        puppet_position_f = self.puppet.measured_cp()[0]
+
+        P_M2P = master_position_f.M.Inverse() * (puppet_position_f.p - master_position_f.p)
+        R_M2P = master_position_f.M.Inverse() * puppet_position_f.M 
+
+        Transform_M2P = PyKDL.Frame(R_M2P, P_M2P)
+
+        #force_P2M = Transform_M2P.M * force
+        #torch_P2M = Transform_M2P.M * torch
+        force_P2M = force
+        torch_P2M = torch
+
+        wrench_P2M = [force_P2M[0], force_P2M[1], force_P2M[2], torch_P2M[0], torch_P2M[1], torch_P2M[2]]
+        # velocity_P2M = [linear_vel_P2M[0], linear_vel_P2M[1], linear_vel_P2M[2], angular_vel_P2M[0], angular_vel_P2M[1], angular_vel_P2M[2]]
+        linear_vel_P2M = linear_vel
+        angular_vel_P2M = angular_vel
+        velocity_P2M = [linear_vel_P2M[0], linear_vel_P2M[1], linear_vel_P2M[2], angular_vel_P2M[0], angular_vel_P2M[1], angular_vel_P2M[2]]
+	
+        wrench_M = [force_M[0], force_M[1], force_M[2], torch_M[0], torch_M[1], torch_M[2]]
+
+        f_servoCS = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        length = len(wrench_M)
+        for i in range(length):
+            f_servoCS[i] = wrench_M[i] + wrench_P2M[i]
+
+        # position_M = Transform_M2P * puppet_position_f
+        if self.count == 0 :
+            # print(f"force_p :{force} \n")
+            # print(f"Transform_M2P.M : {Transform_M2P.M} \n")
+            # print(f"force_M: {force_M} \n")
+            # # print(f"torch_M: {torch_M} \n")
+            print(f"wrench_M: {wrench_M} ")
+            print(f"wrench_P2M: {wrench_P2M} ")
+            print(f"f_servoCS: {f_servoCS} ")
+            # print(f"velocity_M: {velocity_M} ")
+            print('#'*60)
+            # print(f"f_servoCS: {f_servoCS}")
+            self.count = 400
+        self.count -= 1
+        #self.master.body.servo_cf(wrench_P2M)
+        # self.master.servo_cs(None, None, wrench_M)
+        # self.master.servo_cs(None, None, [0.0,0.0,1.0,0.0,0.0,0.0])
+
+        puppet_relative_translation = puppet_position_f.p - self.puppet_cartesian_initial.p
+        master_relative_translation = puppet_relative_translation / self.scale
+        master_translation = master_relative_translation + self.master_cartesian_initial.p
+
+        master_rotation = puppet_position_f.M * alignment_offset.Inverse()
+
+        master_cartesian_goal = PyKDL.Frame(master_rotation, master_translation)
+        self.master.servo_cs(master_cartesian_goal, velocity_P2M, f_servoCS)
 
     ######################################
     def compute_adjoint(R, P):
@@ -452,6 +610,7 @@ class MTM:
 
         self.utils.add_operating_state()
         self.utils.add_measured_cp()
+        self.utils.add_measured_cv()
         self.utils.add_setpoint_cp()
         self.utils.add_move_cp()
         self.utils.add_servo_cs()
