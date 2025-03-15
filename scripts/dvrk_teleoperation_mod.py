@@ -202,7 +202,14 @@ class teleoperation:
             self.enter_aligning()
 
     def run_clutched(self):
-        pass
+        # let arm move freely
+        wrench = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.master.body.servo_cf(wrench)
+        self.master.lock_orientation(self.master.measured_cp()[0].M)
+
+        self.puppet.hold()
+
+        #pass
 
     def enter_following(self):
         self.current_state = teleoperation.State.FOLLOWING
@@ -705,8 +712,8 @@ if __name__ == '__main__':
     args = parser.parse_args(argv)
 
     ral = crtk.ral('dvrk_python_teleoperation')
-    mtm = MTM(ral, args.mtm, timeout=10*args.interval)
-    psm = PSM(ral, args.psm, timeout=10*args.interval)
+    mtm = MTM(ral, args.mtm, timeout=20*args.interval)
+    psm = PSM(ral, args.psm, timeout=20*args.interval)
     application = teleoperation(ral, mtm, psm, args.clutch, args.interval,
                                 not args.no_mtm_alignment, operator_present_topic=args.operator)
     ral.spin_and_execute(application.run)
