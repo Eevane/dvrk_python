@@ -24,6 +24,7 @@ import sys
 import time
 from dvrk_console import *
 import cisstVectorPython as cisstVector
+import pdb
 
 class teleoperation:
     class State(Enum):
@@ -60,7 +61,7 @@ class teleoperation:
         self.gripper_to_jaw_scale = self.jaw_max / (self.gripper_max - self.gripper_zero)
         self.gripper_to_jaw_offset = -self.gripper_zero * self.gripper_to_jaw_scale
 
-        self.operator_is_active = False
+        self.operator_is_active = True
         if operator_present_topic:
             self.operator_is_present = False
         #     self.operator_button = crtk.joystick_button(ral, operator_present_topic)
@@ -68,7 +69,7 @@ class teleoperation:
         # else:
         #     self.operator_is_present = True # if not given, then always assume present
 
-        # self.clutch_pressed = False
+        self.clutch_pressed = False
         # self.clutch_button = crtk.joystick_button(ral, clutch_topic)
         # self.clutch_button.set_callback(self.on_clutch)
 
@@ -182,7 +183,8 @@ class teleoperation:
         self.operator_gripper_max = -math.pi * 100
 
     def transition_aligning(self):
-        if self.operator_is_active and self.clutch_pressed:
+        # without clutch for debug
+        if self.operator_is_active and Clutch.GetButton():
             self.enter_clutched()
             return
 
@@ -196,7 +198,7 @@ class teleoperation:
         orientation_error, _ = self.GetRotAngle(self.alignment_offset())
 
         # if operator is inactive, use gripper or roll activity to detect when the user is ready
-        if self.operator_is_present:
+        if Coag.GetButton():
             gripper_init = self.master.gripper.measured_js()
             gripper = gripper_init.Position()
             self.operator_gripper_max = max(gripper, self.operator_gripper_max)
@@ -230,7 +232,7 @@ class teleoperation:
             self.last_align = now
 
         # periodically notify operator if un-aligned or operator is inactive
-        if self.operator_is_present and now - self.last_operator_prompt > 4.0:
+        if Coag.GetButton() and now - self.last_operator_prompt > 4.0:
             self.last_operator_prompt = now
             if not aligned:
                 print(f'Unable to align master ({self.master.name}), angle error is {orientation_error * 180 / math.pi} (deg)')
@@ -241,17 +243,20 @@ class teleoperation:
         self.current_state = teleoperation.State.CLUTCHED
 
         # let MTM position move freely, but lock orientation
-        wrench = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        wrench = numpy.array([ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
         arg = self.master.body.servo_cf.GetArgumentPrototype()
-        arg.SetGoal(wrench)
+        arg.SetForce(wrench)
         self.master.body.servo_cf(arg)
         ''' wait for editting'''
-        self.master.lock_orientation(self.master.measured_cp()[0].M)
+        lock_cp = self.master.measured_cp()
+        lock_pos = lock_cp.Position()
+        lock_rot = lock_pos.GetRotation()
+        # self.master.lock_orientation(lock_cp)
 
         self.puppet.hold()
 
     def transition_clutched(self):
-        if not self.clutch_pressed or not self.operator_is_present:
+        if not Clutch.GetButton() or not Coag.GetButton():
             self.enter_aligning()
 
     def run_clutched(self):
@@ -265,28 +270,33 @@ class teleoperation:
         # set up gripper ghost to rate-limit jaw speed
         jaw_setpoint = cisstVector.vctFrm3()
         jaw_setpoint_position = self.puppet.jaw.setpoint_js()
-        jaw_setpoint = jaw_setpoint_poisition.Position()
+        jaw_setpoint = jaw_setpoint_position.Position()
+        # prevent []
+        if len(jaw_setpoint) == 0:
+            jaw_setpoint = numpy.array([0.])
+        print(f'jaw_setpoint :{jaw_setpoint}')
 
         
         # if len(jaw_setpoint) != 1:
         #     print(f'{self.ral.node_name()}: unable to get jaw position. Make sure there is an instrument on the puppet ({self.puppet.name})')
         #     self.running = False
-        self.gripper_ghost = self.jaw_to_gripper(jaw_setpoint)
+        self.gripper_ghost = self.jaw_to_gripper(jaw_setpoint[0])# convert 1-D array to scalar
 
         self.master.use_gravity_compensation(True)
 
     def transition_following(self):
-        if not self.operator_is_present:
+        if not Coag.GetButton():
             self.enter_aligning()
-        elif self.clutch_pressed:
+        elif Clutch.GetButton():
             self.enter_clutched()
 
     def run_following(self):
         # let arm move freely
-        wrench = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        wrench = numpy.array([ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
         arg = self.master.body.servo_cf.GetArgumentPrototype()
-        arg.SetGoal(wrench)
+        arg.SetForce(wrench)
         self.master.body.servo_cf(arg)
+        print('master.body.servo_cf(arg)')
 
         ### Cartesian pose teleop
         
@@ -312,9 +322,10 @@ class teleoperation:
         puppet_cartesian_goal.SetRotation(puppet_rotation)
         puppet_cartesian_goal.SetTranslation(puppet_translation)
 
-        arg = self.puppet.servo_cp.GetArgumentPrototype()
-        arg.setGoal(puppet_cartesian_goal)
-        self.puppet.servo_cp(arg)
+        arg_cp = self.puppet.servo_cp.GetArgumentPrototype()
+        arg_cp.SetGoal(puppet_cartesian_goal)
+        self.puppet.servo_cp(arg_cp)
+        print('self.puppet.servo_cp(arg_cp)')
 
         ### Jaw/gripper teleop
         gripper_measured_js_init = self.master.gripper.measured_js()
@@ -324,9 +335,12 @@ class teleoperation:
         max_delta = self.jaw_rate * self.run_period
         # move ghost at most max_delta towards current gripper
         self.gripper_ghost += math.copysign(min(abs(ghost_lag), max_delta), ghost_lag)
+        gripper_to_jaw = self.gripper_to_jaw(self.gripper_ghost)
         arg = self.puppet.servo_jp.GetArgumentPrototype()
         arg.SetGoal(numpy.array([self.gripper_to_jaw(self.gripper_ghost)]))
         self.puppet.servo_jp(arg)
+        print('self.puppet.servo_jp(arg)')
+        
 
 
     # def home(self):
@@ -344,26 +358,35 @@ class teleoperation:
     #     return True
 
     def run(self):
+        #pdb.set_trace()
         homed_successfully = console.home()
+        time.sleep(5)
+        print("home complete")
         if not homed_successfully:
+            print("home not success")
             return
 
+        
         #teleop_rate = self.ral.create_rate(int(1/self.run_period))
         # print("Running teleop at {} Hz".format(int(1/self.run_period)))
         freq = int(1/self.run_period)
 
 
         self.enter_aligning()
+        print("aligned complete")
         self.running = True
 
         #while not self.ral.is_shutdown():
         while True:
             # check if teleop state should transition
             if self.current_state == teleoperation.State.ALIGNING:
+                #print("current state transit aligning")
                 self.transition_aligning()
             elif self.current_state == teleoperation.State.CLUTCHED:
+                print("current state transit clutched")
                 self.transition_clutched()
             elif self.current_state == teleoperation.State.FOLLOWING:
+                print("current state transit following")
                 self.transition_following()
             else:
                 raise RuntimeError("Invalid state: {}".format(self.current_state))
@@ -374,17 +397,20 @@ class teleoperation:
 
             # run teleop state handler
             if self.current_state == teleoperation.State.ALIGNING:
+                #print("current state aligning")
                 self.run_aligning()
             elif self.current_state == teleoperation.State.CLUTCHED:
+                print("current state clutched")
                 self.run_clutched()
             elif self.current_state == teleoperation.State.FOLLOWING:
+                print("current state following")
                 self.run_following()
             else:
                 raise RuntimeError("Invalid state: {}".format(self.current_state))
 
-            time.sleep(freq)
+            time.sleep(0.0008)
 
-class MTM:
+'''class MTM:
     def __init__(self, arm_name, timeout):
         self.name = arm_name
 
@@ -415,7 +441,7 @@ class MTM:
 
 class PSM:
     def __init__(self, arm_name, timeout):
-        self.name = arm_name
+        self.name = arm_name'''
 
 if __name__ == '__main__':
     # extract ros arguments (e.g. __ns:= for namespace)
@@ -443,8 +469,9 @@ if __name__ == '__main__':
     # ral = crtk.ral('dvrk_python_teleoperation')
     from dvrk_console import *
     console.power_on()
+    #pdb.set_trace()
     mtm = MTML
     psm = PSM2
-    application = teleoperation(mtm, psm, 1, 0.02,
-                                not False, 1)
+    application = teleoperation(mtm, psm, 1, 0.002,
+                                True, 1)
     application.run()
