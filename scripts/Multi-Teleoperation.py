@@ -34,13 +34,20 @@ class teleoperation:
         CLUTCHED = 2
         FOLLOWING = 3
 
-    def __init__(self, master1, master2, puppet, clutch_topic, run_period, align_mtm, operator_present_topic = ""):
+    def __init__(self, master1, master2, puppet, clutch, coag, clutch_topic, run_period, align_mtm, operator_present_topic = ""):
         # print('Initialzing dvrk_teleoperation for {} and {}'.format(master1.name, puppet.name))
         self.run_period = run_period
 
         self.master1 = master1 # MTML
         self.master2 = master2 # MTMR
         self.puppet = puppet
+
+        self.clutch = clutch
+        self.coag = coag
+
+        # operating state
+        self.master1_op_state = self.master1.operating_state()
+        self.master1_is_busy = True
 
         self.scale = 0.2
 
@@ -147,27 +154,64 @@ class teleoperation:
         self.clutch_pressed = clutch_pressed
 
     # compute relative orientation of mtm and psm
-    def alignment_offset(self,master):
-        master_measured_cp = master.measured_cp().Position().GetRotation()
-        puppet_measured_cp = self.puppet.setpoint_cp().Position().GetRotation()
-        return numpy.linalg.inv(master_measured_cp) @ puppet_measured_cp
+    def alignment_offset1(self):
+        # master
+        master_measured_cp = self.master1.measured_cp()
+        master_measured_cp_pos = master_measured_cp.Position()
+        master_measured_cp_rot = master_measured_cp_pos.GetRotation()
+        # puppet
+        puppet_measured_cp = self.puppet.setpoint_cp()
+        puppet_measured_cp_pos = puppet_measured_cp.Position()
+        puppet_measured_cp_rot = puppet_measured_cp_pos.GetRotation()
+        return numpy.linalg.inv(master_measured_cp_rot) @ puppet_measured_cp_rot
+    
+    def alignment_offset2(self):
+        # master
+        master_measured_cp = self.master2.measured_cp()
+        master_measured_cp_pos = master_measured_cp.Position()
+        master_measured_cp_rot = master_measured_cp_pos.GetRotation()
+        # puppet
+        puppet_measured_cp = self.puppet.setpoint_cp()
+        puppet_measured_cp_pos = puppet_measured_cp.Position()
+        puppet_measured_cp_rot = puppet_measured_cp_pos.GetRotation()
+        return numpy.linalg.inv(master_measured_cp_rot) @ puppet_measured_cp_rot
     
     # set relative origins for clutching and alignment offset
     def update_initial_state(self):
         # master1
         self.master_1_cartesian_initial = cisstVector.vctFrm3()
-        self.master_1_cartesian_initial.SetRotation(self.master1.measured_cp().Position().GetRotation())
-        self.master_1_cartesian_initial.SetTranslation(self.master1.measured_cp().Position().GetTranslation())
+        # measure cp
+        m1_measured_cp = self.master1.measured_cp()
+        m1_measured_cp_pos = m1_measured_cp.Position()
+        m1_measured_cp_rot = m1_measured_cp_pos.GetRotation()
+        m1_measured_cp_trans = m1_measured_cp_pos.GetTranslation()
+        # set
+        self.master_1_cartesian_initial.SetRotation(m1_measured_cp_rot)
+        self.master_1_cartesian_initial.SetTranslation(m1_measured_cp_trans)
+        #print(f"set to {self.master1.measured_cp().Position().GetTranslation()}")
+        #print(f"and is {self.master_1_cartesian_initial.GetTranslation()}")
         # master2
         self.master_2_cartesian_initial = cisstVector.vctFrm3()
-        self.master_2_cartesian_initial.SetRotation(self.master2.measured_cp().Position().GetRotation())
-        self.master_2_cartesian_initial.SetTranslation(self.master2.measured_cp().Position().GetTranslation())
+        # measure cp
+        m2_measured_cp = self.master2.measured_cp()
+        m2_measured_cp_pos = m2_measured_cp.Position()
+        m2_measured_cp_rot = m2_measured_cp_pos.GetRotation()
+        m2_measured_cp_trans = m2_measured_cp_pos.GetTranslation()
+        # set
+        self.master_2_cartesian_initial.SetRotation(m2_measured_cp_rot)
+        self.master_2_cartesian_initial.SetTranslation(m2_measured_cp_trans)
         # puppet
         self.puppet_cartesian_initial = cisstVector.vctFrm3()
-        self.puppet_cartesian_initial.SetRotation(self.puppet.setpoint_cp().Position().GetRotation())
-        self.puppet_cartesian_initial.SetTranslation(self.puppet.setpoint_cp().Position().GetTranslation())
-        self.master_1_alignment_offset_initial = self.alignment_offset(self.master1)
-        self.master_2_alignment_offset_initial = self.alignment_offset(self.master2)
+        # measure cp
+        puppet_measured_cp = self.puppet.setpoint_cp()
+        puppet_measured_cp_pos = puppet_measured_cp.Position()
+        puppet_measured_cp_rot = puppet_measured_cp_pos.GetRotation()
+        puppet_measured_cp_trans = puppet_measured_cp_pos.GetTranslation()
+        # set
+        self.puppet_cartesian_initial.SetRotation(puppet_measured_cp_rot)
+        self.puppet_cartesian_initial.SetTranslation(puppet_measured_cp_trans)
+        self.master_1_alignment_offset_initial = self.alignment_offset1()
+        self.master_2_alignment_offset_initial = self.alignment_offset2()
      
         self.master_1_offset_angle, self.master_1_offset_axis = self.GetRotAngle(self.master_1_alignment_offset_initial)
         self.master_2_offset_angle, self.master_2_offset_axis = self.GetRotAngle(self.master_2_alignment_offset_initial)
@@ -206,12 +250,12 @@ class teleoperation:
 
     def transition_aligning(self):
         # without clutch for debug
-        if self.operator_is_active and Clutch.GetButton():
+        if self.operator_is_active and self.clutch.GetButton():
             self.enter_clutched()
             return
 
-        master_1_alignment_offset = self.alignment_offset(self.master1)
-        master_2_alignment_offset = self.alignment_offset(self.master2)
+        master_1_alignment_offset = self.alignment_offset1()
+        master_2_alignment_offset = self.alignment_offset2()
         master_1_orientation_error, _ = self.GetRotAngle(master_1_alignment_offset)
         master_2_orientation_error, _ = self.GetRotAngle(master_2_alignment_offset)
         aligned = master_1_orientation_error <= self.operator_orientation_tolerance and master_2_orientation_error <= self.operator_orientation_tolerance
@@ -219,12 +263,12 @@ class teleoperation:
             self.enter_following()
 
     def run_aligning(self):
-        master_1_orientation_error, _ = self.GetRotAngle(self.alignment_offset(self.master1))
-        master_2_orientation_error, _ = self.GetRotAngle(self.alignment_offset(self.master2))
+        master_1_orientation_error, _ = self.GetRotAngle(self.alignment_offset1())
+        master_2_orientation_error, _ = self.GetRotAngle(self.alignment_offset2())
 
         # if operator is inactive, use gripper or roll activity to detect when the user is ready
         # only detect master1
-        if Coag.GetButton():
+        if self.coag.GetButton():
             gripper_init = self.master1.gripper.measured_js()
             gripper = gripper_init.Position()
             self.operator_gripper_max = max(gripper, self.operator_gripper_max)
@@ -251,14 +295,30 @@ class teleoperation:
         now = time.perf_counter()
         # move master1 and master2 spontaneously
         if not self.last_align or now - self.last_align > 4.0:
+            # master 1
             move_cp_1 = cisstVector.vctFrm3()
-            move_cp_1.SetRotation(self.puppet.setpoint_cp().Position().GetRotation())
-            move_cp_1.SetTranslation(self.master1.setpoint_cp().Position().GetTranslation())
+            # setpoint cp
+            puppet_setpoint_cp = self.puppet.setpoint_cp()
+            m1_setpoint_cp = self.master1.setpoint_cp()
+            m2_setpoint_cp = self.master2.setpoint_cp()
+            # pos
+            puppet_setpoint_pos = puppet_setpoint_cp.Position()
+            m1_setpoint_pos = m1_setpoint_cp.Position()
+            m2_setpoint_pos = m2_setpoint_cp.Position()
+            # rot 
+            puppet_setpoint_rot = puppet_setpoint_pos.GetRotation()
+            # trans
+            m1_setpoint_trans = m1_setpoint_pos.GetTranslation()
+            m2_setpoint_trans = m2_setpoint_pos.GetTranslation()
+            # set
+            move_cp_1.SetRotation(puppet_setpoint_rot)
+            move_cp_1.SetTranslation(m1_setpoint_trans)
             arg1 = self.master1.move_cp.GetArgumentPrototype()
             arg1.SetGoal(move_cp_1)
+            # master 2
             move_cp_2 = cisstVector.vctFrm3()
-            move_cp_2.SetRotation(self.puppet.setpoint_cp().Position().GetRotation())
-            move_cp_2.SetTranslation(self.master2.setpoint_cp().Position().GetTranslation())
+            move_cp_2.SetRotation(puppet_setpoint_rot)
+            move_cp_2.SetTranslation(m2_setpoint_trans)
             arg2 = self.master2.move_cp.GetArgumentPrototype()
             arg2.SetGoal(move_cp_2)
             self.master1.move_cp(arg1)
@@ -266,14 +326,14 @@ class teleoperation:
             self.last_align = now
 
         # periodically notify operator if un-aligned or operator is inactive
-        if Coag.GetButton() and now - self.last_operator_prompt > 4.0:
+        if self.coag.GetButton() and now - self.last_operator_prompt > 4.0:
             self.last_operator_prompt = now
             if not aligned1:
-                print(f'Unable to align master1 ({self.master1.name}), angle error is {master_1_orientation_error * 180 / math.pi} (deg)')
+                print(f'Unable to align master1, angle error is {master_1_orientation_error * 180 / math.pi} (deg)')
             elif not aligned2:
-                print(f'Unable to align master2 ({self.master2.name}), angle error is {master_2_orientation_error * 180 / math.pi} (deg)')
+                print(f'Unable to align master2, angle error is {master_2_orientation_error * 180 / math.pi} (deg)')
             elif not self.operator_is_active:
-                print(f'To begin teleop, pinch/twist master1 ({self.master1.name}) gripper a bit')
+                print(f'To begin teleop, pinch/twist master1 gripper a bit')
 
     def enter_clutched(self):
         self.current_state = teleoperation.State.CLUTCHED
@@ -286,16 +346,21 @@ class teleoperation:
         arg2 = self.master2.body.servo_cf.GetArgumentPrototype()
         arg2.SetForce(wrench)
         self.master2.body.servo_cf(arg2)
-        ''' wait for editting'''
-        lock_cp = self.master1.measured_cp()
-        lock_pos = lock_cp.Position()
-        lock_rot = lock_pos.GetRotation()
-        # self.master1.lock_orientation(lock_cp)
+        # master1
+        m1_lock_cp = self.master1.measured_cp()
+        m1_lock_pos = m1_lock_cp.Position()
+        m1_lock_rot = m1_lock_pos.GetRotation()
+        self.master1.lock_orientation(m1_lock_rot)
+        # master2
+        m2_lock_cp = self.master2.measured_cp()
+        m2_lock_pos = m2_lock_cp.Position()
+        m2_lock_rot = m2_lock_pos.GetRotation()
+        self.master2.lock_orientation(m2_lock_rot)
 
         self.puppet.hold()
 
     def transition_clutched(self):
-        if not Clutch.GetButton() or not Coag.GetButton():
+        if not self.clutch.GetButton() or not self.coag.GetButton():
             self.enter_aligning()
 
     def run_clutched(self):
@@ -325,190 +390,106 @@ class teleoperation:
         self.master2.use_gravity_compensation(True)
 
     def transition_following(self):
-        if not Coag.GetButton():
+        if not self.coag.GetButton():
             self.enter_aligning()
-        elif Clutch.GetButton():
+        elif self.clutch.GetButton():
             self.enter_clutched()
 
-    # def run_following(self):
-    #     # # let arm move freely
-    #     # wrench = numpy.array([ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-    #     # arg = self.master1.body.servo_cf.GetArgumentPrototype()
-    #     # arg.SetForce(wrench)
-    #     # self.master1.body.servo_cf(arg)
-    #     # print('master1.body.servo_cf(arg)')
-
-    #     ### Cartesian pose teleop
-        
-    #     #position
-    #     master_1_position = self.master1.measured_cp().Position()
-    #     #master_2_position = self.master2.measured_cp().Position()
-    #     master_2_position = cisstVector.vctFrm3()
-    #     # puppet_position_fw = self.puppet.measured_cp().Position()
-
-    #     # rot+trans master1
-    #     master_1_rotation1 = master_1_position.GetRotation()
-    #     master_1_trans1 = master_1_position.GetTranslation()
-    #     master_1_trans2 = self.master_1_cartesian_initial.GetTranslation()
-    #     # rot+trans master2
-    #     master_2_rotation1 = master_2_position.GetRotation()
-    #     print(f"master_2_rotation : {master_2_rotation1}")
-    #     master_2_trans1 = master_2_position.GetTranslation()
-    #     master_2_trans2 = self.master_2_cartesian_initial.GetTranslation()
-    #     # puppet_rotation_fw = puppet_position_fw.GetRotation()
-    #     # translation master1
-    #     master_1_translation = master_1_trans1 - master_1_trans2
-    #     master_1_puppet_translation = master_1_translation * self.scale
-
-    #     puppet_trans2 = self.puppet_cartesian_initial.GetTranslation()
-    #     master_1_puppet_translation = master_1_puppet_translation + puppet_trans2
-
-    #     # translation master2
-    #     master_2_translation = master_2_trans1 - master_2_trans2
-    #     master_2_puppet_translation = master_2_translation * self.scale
-        
-    #     master_2_puppet_translation += puppet_trans2
-
-    #     # average translation
-    #     puppet_translation = (master_1_puppet_translation + master_2_puppet_translation) / 2.0
-
-    #     # set rotation of psm to match mtm plus alignment offset
-    #     # if we can actuate the MTM, we slowly reduce the alignment offset to zero over time
-    #     max_delta = self.align_rate * self.run_period
-    #     self.master_1_offset_angle += math.copysign(min(abs(self.master_1_offset_angle), max_delta), -self.master_1_offset_angle)
-    #     self.master_2_offset_angle += math.copysign(min(abs(self.master_2_offset_angle), max_delta), -self.master_2_offset_angle)
-    #     # rotation offset master1
-    #     master_1_alignment_offset = self.GetRotMatrix(self.master_1_offset_axis, self.master_1_offset_angle)
-    #     master_1_puppet_rotation = master_1_rotation1 @ master_1_alignment_offset
-    #     # rotation offset master2
-    #     master_2_alignment_offset = self.GetRotMatrix(self.master_2_offset_axis,self.master_2_offset_angle)
-    #     master_2_puppet_rotation = master_2_rotation1 @ master_2_alignment_offset
-
-    #     # average rotation
-    #     #puppet_rotations = Rotation.from_dcm((master_1_puppet_rotation,master_2_puppet_rotation))
-    #     puppet_rotation = self.average_rotation(numpy.array([master_1_puppet_rotation,master_2_puppet_rotation]))
-    #     print(f"puppet_rotation : {puppet_rotation}")
-
-    #     puppet_cartesian_goal = cisstVector.vctFrm3()
-    #     puppet_cartesian_goal.SetRotation(puppet_rotation)
-    #     puppet_cartesian_goal.SetTranslation(puppet_translation)
-    #     print(f'puppet_cartesian_goal : {puppet_cartesian_goal}')
-
-    #     # Force measurement
-    #     # master 1
-    #     master_1_force = self.master1.body.measured_cf().Force()
-    #     # force_MTM_cs = self.master1.body.measured_cf().Force()
-    #     master_1_force[0:3] = master_1_force[0:3] * (-1)
-    #     master_1_force[3:6] = master_1_force[3:6] * 0 * 2
-
-    #     # master 2
-    #     master_2_force = numpy.zeros(6)
-    #     #master_2_force = self.master2.body.measured_cf().Force()
-    #     #master_2_force[0:3] = master_2_force[0:3] * (-1)
-    #     #master_2_force[3:6] = master_2_force[3:6] * 0 * 2
-
-    #     average_master_force = (master_1_force + master_2_force) / 2.0
-
-    #     # Velocity measurement
-    #     # R_M2P = numpy.linalg.inv(puppet_rotation_fw) @ master_1_rotation1
-    #     # linear_vel_fw = self.scale * (R_M2P @  self.master1.measured_cv().VelocityLinear() )
-    #     linear_vel_fw = self.scale * self.master1.measured_cv().VelocityLinear() 
-    #     # angular_vel_fw = self.scale * (R_M2P @  self.master1.measured_cv().VelocityAngular() )
-    #     angular_vel_fw = self.master1.measured_cv().VelocityAngular()
-    #     vel_fw = numpy.hstack((linear_vel_fw, angular_vel_fw))
-
-    #     # execute
-    #     arg_fw = self.puppet.servo_cs.GetArgumentPrototype()
-    #     arg_fw.SetPositionIsValid(True)
-    #     arg_fw.SetPosition(puppet_cartesian_goal)
-    #     #print(f'master_cartesian_goal: {master_cartesian_goal}')
-    #     arg_fw.SetVelocityIsValid(False)
-    #     #arg_fw.SetVelocity(vel_fw)
-    #     #print(f'vel_cs : {vel_cs}')
-    #     arg_fw.SetForceIsValid(True)
-    #     arg_fw.SetForce(average_master_force)
-    #     #print(f'force_PSM_cs : {force_PSM_cs}')
-
-    #     self.puppet.servo_cs(arg_fw)
-    #     print(f"arg_fw : {arg_fw}")
-
-    #     # arg = self.puppet.servo_cp.GetArgumentPrototype()
-    #     # arg.SetGoal(puppet_cartesian_goal)
-    #     # self.puppet.servo_cp(arg)
-    #     # print('self.puppet.servo_cp(arg_cp)')
-
-    #     ### Jaw/gripper teleop
-    #     # master 1
-    #     master_1_gripper_measured_js_init = self.master1.gripper.measured_js()
-    #     master_1_current_gripper = master_1_gripper_measured_js_init.Position()
-
-    #     master_1_ghost_lag = master_1_current_gripper - self.gripper_ghost
-    #     # master 2
-    #     # master_2_gripper_measured_js_init = self.master2.gripper.measured_js()
-    #     # master_2_current_gripper = master_2_gripper_measured_js_init.Position()
-    #     # master_2_ghost_lag = master_2_current_gripper - self.gripper_ghost
-    #     master_2_ghost_lag = numpy.array([0])
-
-    #     # average
-    #     average_ghost_lag = (master_1_ghost_lag + master_2_ghost_lag) /2.0
-
-    #     max_delta = self.jaw_rate * self.run_period
-    #     # move ghost at most max_delta towards current gripper
-    #     self.gripper_ghost += math.copysign(min(abs(average_ghost_lag), max_delta), average_ghost_lag)
-        
-    #     # gripper_to_jaw = self.gripper_to_jaw(self.gripper_ghost)
-    #     arg = self.puppet.jaw.servo_jp.GetArgumentPrototype()
-    #     arg.SetGoal(numpy.array([self.gripper_to_jaw(self.gripper_ghost)]))
-    #     self.puppet.jaw.servo_jp(arg)
-    #     print('self.puppet.servo_jp(arg)')
     def run_following(self):
         # # let arm move freely
         # wrench = numpy.array([ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-        # arg = self.master.body.servo_cf.GetArgumentPrototype()
+        # arg = self.master1.body.servo_cf.GetArgumentPrototype()
         # arg.SetForce(wrench)
-        # self.master.body.servo_cf(arg)
-        # print('master.body.servo_cf(arg)')
+        # self.master1.body.servo_cf(arg)
+        # print('master1.body.servo_cf(arg)')
 
         ### Cartesian pose teleop
         
         #position
-        master_position = self.master1.measured_cp().Position()
+        m1_measured_cp = self.master1.measured_cp()
+        m2_measured_cp = self.master2.measured_cp()
+        master_1_position = m1_measured_cp.Position()
+        master_2_position = m2_measured_cp.Position()
+        #master_2_position = cisstVector.vctFrm3()
         # puppet_position_fw = self.puppet.measured_cp().Position()
 
-        #rotation
-        master_rotation1 = master_position.GetRotation()
-        master_trans1 = master_position.GetTranslation()
-        master_trans2 = self.master_cartesian_initial.GetTranslation()
+        # rot+trans master1
+        master_1_rotation1 = master_1_position.GetRotation()
+        master_1_trans1 = master_1_position.GetTranslation()
+        master_1_trans2 = self.master_1_cartesian_initial.GetTranslation()
+        print(f"asdasdasda {master_1_trans1}")
+        print(f"and is now {master_1_trans2}")
+        # rot+trans master2
+        master_2_rotation1 = master_2_position.GetRotation()
+        print(f"master_2_rotation : {master_2_rotation1}")
+        master_2_trans1 = master_2_position.GetTranslation()
+        master_2_trans2 = self.master_2_cartesian_initial.GetTranslation()
         # puppet_rotation_fw = puppet_position_fw.GetRotation()
-        # translation
-        master_translation = master_trans1 - master_trans2
-        puppet_translation = master_translation * self.scale
+        # translation master1
+        master_1_translation = master_1_trans1 - master_1_trans2
+        master_1_puppet_translation = master_1_translation * self.scale
 
         puppet_trans2 = self.puppet_cartesian_initial.GetTranslation()
-        puppet_translation = puppet_translation + puppet_trans2
+        master_1_puppet_translation = master_1_puppet_translation + puppet_trans2
+
+        # translation master2
+        master_2_translation = master_2_trans1 - master_2_trans2
+        master_2_puppet_translation = master_2_translation * self.scale
+        
+        master_2_puppet_translation += puppet_trans2
+
+        # average translation
+        puppet_translation = (master_1_puppet_translation + master_2_puppet_translation) / 2.0
+        #print(f"target puppet translation: {puppet_translation}")
+        #print(f"current puppet translation: {self.puppet.measured_cp().Position().GetTranslation()}")
+        #print(f"{master_1_translation}")
+        #print(f"{master_2_translation}")
 
         # set rotation of psm to match mtm plus alignment offset
         # if we can actuate the MTM, we slowly reduce the alignment offset to zero over time
         max_delta = self.align_rate * self.run_period
-        self.offset_angle += math.copysign(min(abs(self.offset_angle), max_delta), -self.offset_angle)
-        alignment_offset = self.GetRotMatrix(self.offset_axis, self.offset_angle)
-        puppet_rotation = master_rotation1 @ alignment_offset
+        self.master_1_offset_angle += math.copysign(min(abs(self.master_1_offset_angle), max_delta), -self.master_1_offset_angle)
+        self.master_2_offset_angle += math.copysign(min(abs(self.master_2_offset_angle), max_delta), -self.master_2_offset_angle)
+        # rotation offset master1
+        master_1_alignment_offset = self.GetRotMatrix(self.master_1_offset_axis, self.master_1_offset_angle)
+        master_1_puppet_rotation = master_1_rotation1 @ master_1_alignment_offset
+        # rotation offset master2
+        master_2_alignment_offset = self.GetRotMatrix(self.master_2_offset_axis,self.master_2_offset_angle)
+        master_2_puppet_rotation = master_2_rotation1 @ master_2_alignment_offset
+
+        # average rotation
+        #puppet_rotations = Rotation.from_dcm((master_1_puppet_rotation,master_2_puppet_rotation))
+        puppet_rotation = self.average_rotation(numpy.array([master_1_puppet_rotation,master_2_puppet_rotation]))
+        print(f"puppet_rotation : {puppet_rotation}")
 
         puppet_cartesian_goal = cisstVector.vctFrm3()
         puppet_cartesian_goal.SetRotation(puppet_rotation)
         puppet_cartesian_goal.SetTranslation(puppet_translation)
+        print(f'puppet_cartesian_goal : {puppet_cartesian_goal}')
 
         # Force measurement
-        force_MTM = self.master1.body.measured_cf().Force()
-        # force_MTM_cs = self.master.body.measured_cf().Force()
-        force_MTM[0:3] = force_MTM[0:3] * (-0.5)
-        force_MTM[3:6] = force_MTM[3:6] * 0 * 2
+        # master 1
+        m1_measured_cf = self.master1.body.measured_cf()
+        m1_measured_cf_force = m1_measured_cf.Force()
+
+        # force_MTM_cs = self.master1.body.measured_cf().Force()
+        m1_measured_cf_force[0:3] = m1_measured_cf_force[0:3] * (-1)
+        m1_measured_cf_force[3:6] = m1_measured_cf_force[3:6] * 0 * 2
+
+        # master 2
+        m2_measured_cf = self.master2.body.measured_cf()
+        m2_measured_cf_force = m2_measured_cf.Force()
+        #master_2_force = numpy.zeros(6)
+        m2_measured_cf_force[0:3] = m2_measured_cf_force[0:3] * (-1)
+        m2_measured_cf_force[3:6] = m2_measured_cf_force[3:6] * 0 * 2
+
+        average_master_force = (m1_measured_cf_force + m2_measured_cf_force) / 2.0
 
         # Velocity measurement
-        # R_M2P = numpy.linalg.inv(puppet_rotation_fw) @ master_rotation1
-        # linear_vel_fw = self.scale * (R_M2P @  self.master.measured_cv().VelocityLinear() )
+        # R_M2P = numpy.linalg.inv(puppet_rotation_fw) @ master_1_rotation1
+        # linear_vel_fw = self.scale * (R_M2P @  self.master1.measured_cv().VelocityLinear() )
         linear_vel_fw = self.scale * self.master1.measured_cv().VelocityLinear() 
-        # angular_vel_fw = self.scale * (R_M2P @  self.master.measured_cv().VelocityAngular() )
+        # angular_vel_fw = self.scale * (R_M2P @  self.master1.measured_cv().VelocityAngular() )
         angular_vel_fw = self.master1.measured_cv().VelocityAngular()
         vel_fw = numpy.hstack((linear_vel_fw, angular_vel_fw))
 
@@ -518,13 +499,14 @@ class teleoperation:
         arg_fw.SetPosition(puppet_cartesian_goal)
         #print(f'master_cartesian_goal: {master_cartesian_goal}')
         arg_fw.SetVelocityIsValid(False)
-        arg_fw.SetVelocity(vel_fw)
+        #arg_fw.SetVelocity(vel_fw)
         #print(f'vel_cs : {vel_cs}')
         arg_fw.SetForceIsValid(True)
-        arg_fw.SetForce(force_MTM)
+        arg_fw.SetForce(average_master_force)
         #print(f'force_PSM_cs : {force_PSM_cs}')
 
         self.puppet.servo_cs(arg_fw)
+        print(f"arg_fw : {arg_fw}")
 
         # arg = self.puppet.servo_cp.GetArgumentPrototype()
         # arg.SetGoal(puppet_cartesian_goal)
@@ -532,41 +514,67 @@ class teleoperation:
         # print('self.puppet.servo_cp(arg_cp)')
 
         ### Jaw/gripper teleop
-        gripper_measured_js_init = self.master.gripper.measured_js()
-        current_gripper = gripper_measured_js_init.Position()
+        # master 1
+        master_1_gripper_measured_js_init = self.master1.gripper.measured_js()
+        master_1_current_gripper = master_1_gripper_measured_js_init.Position()
 
-        ghost_lag = current_gripper - self.gripper_ghost
+        master_1_ghost_lag = master_1_current_gripper - self.gripper_ghost
+        # master 2
+        # master_2_gripper_measured_js_init = self.master2.gripper.measured_js()
+        # master_2_current_gripper = master_2_gripper_measured_js_init.Position()
+        # master_2_ghost_lag = master_2_current_gripper - self.gripper_ghost
+        master_2_ghost_lag = numpy.array([0])
+
+        # average
+        average_ghost_lag = (master_1_ghost_lag + master_2_ghost_lag) /2.0
+
         max_delta = self.jaw_rate * self.run_period
         # move ghost at most max_delta towards current gripper
-        self.gripper_ghost += math.copysign(min(abs(ghost_lag), max_delta), ghost_lag)
+        self.gripper_ghost += math.copysign(min(abs(average_ghost_lag), max_delta), average_ghost_lag)
+        
         # gripper_to_jaw = self.gripper_to_jaw(self.gripper_ghost)
         arg = self.puppet.jaw.servo_jp.GetArgumentPrototype()
         arg.SetGoal(numpy.array([self.gripper_to_jaw(self.gripper_ghost)]))
         self.puppet.jaw.servo_jp(arg)
-        print('self.puppet.servo_jp(arg)')
+        #print('self.puppet.servo_jp(arg)')
 
-
-
-
+        ### TEMPORARY!! pls delete
+        servo_zero = self.master1.body.servo_cf.GetArgumentPrototype()
+        servo_zero.SetForce(numpy.zeros_like(servo_zero.Force()))
+        #self.master1.body.servo_cf(servo_zero)
+        servo_zero = self.master2.body.servo_cf.GetArgumentPrototype()
+        servo_zero.SetForce(numpy.zeros_like(servo_zero.Force()))
+        #self.master2.body.servo_cf(servo_zero)
 
         '''
         backward
         '''
-        '''# MTML_servo_cs Position
-        puppet_position_cs = self.puppet.measured_cp().Position()
+        # MTML_servo_cs Position
+        puppet_measured_cp = self.puppet.measured_cp()
+        puppet_measured_pos = puppet_measured_cp.Position()
         #master_position_bw = self.master1.measured_cp().Position()
         #master_rotation_bw = master_position_bw.GetRotation()
-        puppet_rotation_cs = puppet_position_cs.GetRotation()
+        puppet_measured_rot = puppet_measured_pos.GetRotation()
+        puppet_measured_trans = puppet_measured_pos.GetTranslation()
 
         #R_P2M = numpy.linalg.inv(master_rotation_bw) @ puppet_rotation_cs
-        puppet_translation_cs = puppet_position_cs.GetTranslation()
-        puppet_relative_translation = puppet_translation_cs - self.puppet_cartesian_initial.GetTranslation()
+        puppet_relative_translation = puppet_measured_trans - self.puppet_cartesian_initial.GetTranslation()
         master_relative_translation = puppet_relative_translation / self.scale
-        master_translation_cs = master_relative_translation + self.master_1_cartesian_initial.GetTranslation()
-        master_rotation_cs = puppet_rotation_cs @ numpy.linalg.inv(master_1_alignment_offset)
-        master_cartesian_goal = cisstVector.vctFrm3()
-        master_cartesian_goal.SetRotation(master_rotation_cs)
-        master_cartesian_goal.SetTranslation(master_translation_cs)
+        # relative trans
+        m1_translation_cs = master_relative_translation + self.master_1_cartesian_initial.GetTranslation()
+        m2_translation_cs = master_relative_translation + self.master_2_cartesian_initial.GetTranslation()
+        # relative rot
+        m1_rotation_cs = puppet_measured_rot @ numpy.linalg.inv(master_1_alignment_offset)
+        m2_rotation_cs = puppet_measured_rot @ numpy.linalg.inv(master_2_alignment_offset)
+        # set
+        # master1
+        m1_cartesian_goal = cisstVector.vctFrm3()
+        m1_cartesian_goal.SetRotation(m1_rotation_cs)
+        m1_cartesian_goal.SetTranslation(m1_translation_cs)
+        # master2
+        m2_cartesian_goal = cisstVector.vctFrm3()
+        m2_cartesian_goal.SetRotation(m2_rotation_cs)
+        m2_cartesian_goal.SetTranslation(m2_translation_cs)
 
         # MTML_servo_cs Velocity
         #linear_vel_cs = (1/self.scale) *  (R_P2M @ self.puppet.measured_cv().VelocityLinear() )
@@ -576,23 +584,33 @@ class teleoperation:
         vel_cs = numpy.hstack((linear_vel_cs, angular_vel_cs))
 
         # MTML_servo_cs Force
-        force_PSM_cs = self.puppet.body.measured_cf().Force()
+        puppet_measured_cf = self.puppet.body.measured_cf()
+        puppet_measured_cf_force = puppet_measured_cf.Force()
         # force_MTM_cs = self.master1.body.measured_cf().Force()
-        force_PSM_cs[0:3] = force_PSM_cs[0:3] * (-1)
-        force_PSM_cs[3:6] = force_PSM_cs[3:6] * 0 * 2
+        puppet_measured_cf_force[0:3] = puppet_measured_cf_force[0:3] * (-1)
+        puppet_measured_cf_force[3:6] = puppet_measured_cf_force[3:6] * 0 * 2
 
+        # master1 arg
         arg = self.master1.servo_cs.GetArgumentPrototype()
         arg.SetPositionIsValid(True)
-        arg.SetPosition(master_cartesian_goal)
-        print(f'master_cartesian_goal: {master_cartesian_goal}')
+        arg.SetPosition(m1_cartesian_goal)
+        print(f'master_cartesian_goal: {m1_cartesian_goal}')
         arg.SetVelocityIsValid(False)
         arg.SetVelocity(vel_cs)
         print(f'vel_cs : {vel_cs}')
         arg.SetForceIsValid(True)
-        arg.SetForce(force_PSM_cs)
-        print(f'force_PSM_cs : {force_PSM_cs}')
-        self.master1.servo_cs(arg)'''
-        
+        arg.SetForce(puppet_measured_cf_force)
+        #print(f'puppet_measured_cf_force : {puppet_measured_cf_force}')
+        self.master1.servo_cs(arg)
+        # master2 arg
+        arg2 = self.master2.servo_cs.GetArgumentPrototype()
+        arg2.SetPositionIsValid(True)
+        arg2.SetPosition(m2_cartesian_goal)
+        arg2.SetVelocityIsValid(False)
+        #arg2.SetVelocity(vel_cs)
+        arg2.SetForceIsValid(True)
+        arg2.SetForce(puppet_measured_cf_force)
+        self.master2.servo_cs(arg2)
 
 
     # def home(self):
@@ -623,16 +641,15 @@ class teleoperation:
         # print("Running teleop at {} Hz".format(int(1/self.run_period)))
         freq = int(1/self.run_period)
 
-
         self.enter_aligning()
         print("aligned complete")
         self.running = True
 
         #while not self.ral.is_shutdown():
-        while True:
+        while self.master1_is_busy:
             # check if teleop state should transition
             if self.current_state == teleoperation.State.ALIGNING:
-                #print("current state transit aligning")
+                print("current state transit aligning")
                 self.transition_aligning()
             elif self.current_state == teleoperation.State.CLUTCHED:
                 print("current state transit clutched")
@@ -649,7 +666,7 @@ class teleoperation:
 
             # run teleop state handler
             if self.current_state == teleoperation.State.ALIGNING:
-                #print("current state aligning")
+                print("current state aligning")
                 self.run_aligning()
             elif self.current_state == teleoperation.State.CLUTCHED:
                 print("current state clutched")
@@ -659,8 +676,15 @@ class teleoperation:
                 self.run_following()
             else:
                 raise RuntimeError("Invalid state: {}".format(self.current_state))
+            
+            self.master1_op_state = self.master1.operating_state()
+            self.master1_is_busy = self.master1_op_state.GetIsBusy()
 
-            time.sleep(0.0008)
+            print(f"master1_is_busy : {self.master1_is_busy}")
+
+            time.sleep(self.run_period)
+
+        print(f"run terminated, MTML is busy: {self.master1_is_busy}")
 
 '''class MTM:
     def __init__(self, arm_name, timeout):
@@ -720,11 +744,15 @@ if __name__ == '__main__':
 
     # ral = crtk.ral('dvrk_python_teleoperation')
     from dvrk_console import *
-    console.power_on()
+    # console.power_on()
     #pdb.set_trace()
     mtm1 = MTML
     mtm2 = MTMR
     psm = PSM2
-    application = teleoperation(mtm1,mtm2, psm, 1, 0.002,
+    clutch = Clutch
+    coag = Coag
+
+    application = teleoperation(mtm1,mtm2, psm, clutch, coag, 1, 0.002,
                                 True, 1)
+
     application.run()
