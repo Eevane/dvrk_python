@@ -1,0 +1,126 @@
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+W- Class mtsIntuitiveResearchKitConsole: set_calibration_mode:
+----------------------------------------------------
+ Warning:
+ You're running the dVRK console in calibration mode.
+ You should only do this if you are currently calibrating
+ potentiometers.
+----------------------------------------------------
+M- Class mtsIntuitiveResearchKitConsole: Configure: console using file "console-MTML-MTMR.json"
+----> content of configuration file: 
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+	"arms" : 
+	[
+		{
+			"base-frame" : 
+			{
+				"reference-frame" : "HRSV",
+				"transform" : 
+				[
+					[
+						-1,
+						0,
+						0,
+						0.17999999999999999
+					],
+					[
+						0,
+						0.86602540400000005,
+						0.5,
+						0.40000000000000002
+					],
+					[
+						0,
+						0.5,
+						-0.86602540400000005,
+						0.47499999999999998
+					],
+					[
+						0,
+						0,
+						0,
+						1
+					]
+				]
+			},
+			"name" : "MTML",
+			"serial" : "22723",
+			"type" : "MTM"
+		},
+		{
+			"base-frame" : 
+			{
+				"reference-frame" : "HRSV",
+				"transform" : 
+				[
+					[
+						-1,
+						0,
+						0,
+						-0.17999999999999999
+					],
+					[
+						0,
+						0.86602540400000005,
+						0.5,
+						0.40000000000000002
+					],
+					[
+						0,
+						0.5,
+						-0.86602540400000005,
+						0.47499999999999998
+					],
+					[
+						0,
+						0,
+						0,
+						1
+					]
+				]
+			},
+			"name" : "MTMR",
+			"serial" : "28247",
+			"type" : "MTM"
+		}
+	],
+	"io" : 
+	{
+		"footpedals" : "io/sawRobotIO1394-MTMR-foot-pedals.xml"
+	}
+}
+<----
+M- Class mtsIntuitiveResearchKitConsole: Configure:
+     - Period IO is 0.000606667
+     - Port is fw:0
+     - Protocol is sequential-read-broadcast-write
+     - Watchdog timeout is 0.03
+FirewirePort::Init: number of ports = 1
+  Port 0: /dev/fw8, 9 nodes
+FirewirePort::Init: successfully initialized port 0
+Using libraw1394 version 2.1.2
+FirewirePort::Init: successfully disabled cycle start packet
+FirewirePort::InitNodes: base node id = ffc0
+BasePort::ScanNodes: building node map for 8 nodes:
+  Node 0, BoardId = 8, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 1, BoardId = 9, FPGA_V2, Hardware = QLA1, Firmware Version = 8
+  Node 2, BoardId = 7, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 3, BoardId = 6, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 4, BoardId = 0, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 5, BoardId = 1, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 6, BoardId = 2, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 7, BoardId = 3, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+BasePort::ScanNodes: found 8 boards
+BasePort::SetDefaultProtocol: all nodes broadcast capable and support shorter wait
+FirewirePort::NumberOfUsers: found 2 users
+Full lsof result:
+COMMAND      PID   PPID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+ipython3  599877 599016 pshao7   33u   CHR  241,0      0t0  352 /dev/fw0
+dvrk_cons 600689 600688 pshao7   25u   CHR  241,0      0t0  352 /dev/fw0
+sh        600703 600689 pshao7   25u   CHR  241,0      0t0  352 /dev/fw0
+sh        600706 599877 pshao7   33u   CHR  241,0      0t0  352 /dev/fw0
+play      600707 600706 pshao7   33u   CHR  241,0      0t0  352 /dev/fw0
+
+E- Class mtsRobotIO1394: File: mtsRobotIO1394.cpp Line: 178 -  Init: found more than one user on firewire port: fw:0

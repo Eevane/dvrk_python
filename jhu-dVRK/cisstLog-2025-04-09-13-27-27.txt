@@ -1,0 +1,120 @@
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class mtsIntuitiveResearchKitConsole: Configure: console using file "console-MTML-PSM2-Teleop.json"
+----> content of configuration file: 
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+	"arms" : 
+	[
+		{
+			"base-frame" : 
+			{
+				"reference-frame" : "ECM",
+				"transform" : 
+				[
+					[
+						1,
+						0,
+						0,
+						0.20000000000000001
+					],
+					[
+						0,
+						-0.86602540400000005,
+						0.5,
+						0
+					],
+					[
+						0,
+						-0.5,
+						-0.86602540400000005,
+						0
+					],
+					[
+						0,
+						0,
+						0,
+						1
+					]
+				]
+			},
+			"name" : "PSM2",
+			"serial" : "27374",
+			"type" : "PSM"
+		},
+		{
+			"base-frame" : 
+			{
+				"reference-frame" : "HRSV",
+				"transform" : 
+				[
+					[
+						-1,
+						0,
+						0,
+						0.17999999999999999
+					],
+					[
+						0,
+						0.86602540400000005,
+						0.5,
+						0.40000000000000002
+					],
+					[
+						0,
+						0.5,
+						-0.86602540400000005,
+						0.47499999999999998
+					],
+					[
+						0,
+						0,
+						0,
+						1
+					]
+				]
+			},
+			"name" : "MTML",
+			"serial" : "22723",
+			"type" : "MTM"
+		}
+	],
+	"io" : 
+	{
+		"footpedals" : "io/sawRobotIO1394-MTMR-foot-pedals.xml"
+	},
+	"psm-teleops" : 
+	[
+		{
+			"configure-parameter" : 
+			{
+				"jaw-rate" : 6.2999999999999998, // rad per second
+				"scale" : 0.40000000000000002
+			},
+			"mtm" : "MTML",
+			"psm" : "PSM2",
+			"type" : "TELEOP_PSM"
+		}
+	]
+}
+<----
+M- Class mtsIntuitiveResearchKitConsole: Configure:
+     - Period IO is 0.000606667
+     - Port is fw:0
+     - Protocol is sequential-read-broadcast-write
+     - Watchdog timeout is 0.03
+FirewirePort::Init: number of ports = 1
+  Port 0: /dev/fw0, 1 nodes
+FirewirePort::Init: successfully initialized port 0
+Using libraw1394 version 2.1.2
+FirewirePort::Init: successfully disabled cycle start packet
+FirewirePort::InitNodes: base node id = ffc0
+BasePort::ScanNodes: building node map for 0 nodes:
+BasePort::ScanNodes: found 0 boards
+BasePort::SetProtocol: system running with broadcast write
+M- Class mtsIntuitiveResearchKitConsole: Configure: configuring IO using "/home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTML-22723.xml"
+M- Class mtsRobotIO1394: Configure: configuring from /home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTML-22723.xml
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis 6 for robot 1 (MTML)
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMLRead" and corresponding interface "StateTableMTMLRead" to task "io"
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMLWrite" and corresponding interface "StateTableMTMLWrite" to task "io"
+E- Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: 692 -  SetBoards: MTML, hardware version doesn't match value from configuration file for board: 0, Id: 0.  Hardware found: Invalid.  Configuration file value: QLA1

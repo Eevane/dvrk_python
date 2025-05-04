@@ -1,0 +1,847 @@
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+W- Class mtsIntuitiveResearchKitConsole: set_calibration_mode:
+----------------------------------------------------
+ Warning:
+ You're running the dVRK console in calibration mode.
+ You should only do this if you are currently calibrating
+ potentiometers.
+----------------------------------------------------
+M- Class mtsIntuitiveResearchKitConsole: Configure: console using file "console-MTMR.json"
+----> content of configuration file: 
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+	"arms" : 
+	[
+		{
+			"name" : "MTMR",
+			"serial" : "28247",
+			"type" : "MTM"
+		}
+	],
+	"io" : 
+	{
+		"footpedals" : "io/sawRobotIO1394-MTMR-foot-pedals.xml"
+	}
+}
+<----
+M- Class mtsIntuitiveResearchKitConsole: Configure:
+     - Period IO is 0.000606667
+     - Port is fw:0
+     - Protocol is sequential-read-broadcast-write
+     - Watchdog timeout is 0.03
+FirewirePort::Init: number of ports = 1
+  Port 0: /dev/fw8, 9 nodes
+FirewirePort::Init: successfully initialized port 0
+Using libraw1394 version 2.1.2
+FirewirePort::Init: successfully disabled cycle start packet
+FirewirePort::InitNodes: base node id = ffc0
+BasePort::ScanNodes: building node map for 8 nodes:
+  Node 0, BoardId = 8, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 1, BoardId = 9, FPGA_V2, Hardware = QLA1, Firmware Version = 8
+  Node 2, BoardId = 7, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 3, BoardId = 6, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 4, BoardId = 0, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 5, BoardId = 1, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 6, BoardId = 2, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 7, BoardId = 3, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+BasePort::ScanNodes: found 8 boards
+BasePort::SetDefaultProtocol: all nodes broadcast capable and support shorter wait
+BasePort::SetProtocol: system running with broadcast write
+M- Class mtsIntuitiveResearchKitConsole: Configure: configuring IO using "/home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTMR-28247.xml"
+M- Class mtsRobotIO1394: Configure: configuring from /home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTMR-28247.xml
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis 6 for robot 1 (MTMR)
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMRRead" and corresponding interface "StateTableMTMRRead" to task "io"
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMRWrite" and corresponding interface "StateTableMTMRWrite" to task "io"
+W- Class mtsRobotIO1394: SetBoards: MTMR, board: 0, Id: 2, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: SetBoards: MTMR, board: 1, Id: 3, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+M- Class mtsRobotIO1394: Configure: added robot "MTMR"
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+M- Class mtsIntuitiveResearchKitConsole: Configure: configuring IO gripper using "/home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTMR-gripper-28247.xml"
+M- Class mtsRobotIO1394: Configure: configuring from /home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/sawRobotIO1394-MTMR-gripper-28247.xml
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis -12345 for robot 1 (MTMR-Gripper)
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMR-GripperRead" and corresponding interface "StateTableMTMR-GripperRead" to task "io"
+D- Class mtsRobotIO1394: AddStateTable: added state table "MTMR-GripperWrite" and corresponding interface "StateTableMTMR-GripperWrite" to task "io"
+W- Class mtsRobotIO1394: SetBoards: MTMR-Gripper, board: 0, Id: 3, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+M- Class mtsRobotIO1394: Configure: added robot "MTMR-Gripper"
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+M- Class mtsIntuitiveResearchKitConsole: Configure: configuring IO foot pedals using "/home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/io/sawRobotIO1394-MTMR-foot-pedals.xml"
+M- Class mtsRobotIO1394: Configure: configuring from /home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/io/sawRobotIO1394-MTMR-foot-pedals.xml
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+D- Class mtsIntuitiveResearchKitMTM: AddStateTable: added state table "State" and corresponding interface "StateTableState" to task "MTMR"
+D- Class mtsIntuitiveResearchKitMTM: AddStateTable: added state table "Configuration" and corresponding interface "StateTableConfiguration" to task "MTMR"
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #1: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #2: MTMR: current state DISABLED
+M- Class mtsIntuitiveResearchKitMTM: Configure: MTMR using file "/home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/MTMR-28247.json"
+----> content of configuration file: 
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+	"generation" : "Classic",
+	"gravity-compensation" : "gc-MTMR-28247.json",
+	"kinematic" : "kinematic/mtmr.json"
+}
+<----
+M- Class mtsIntuitiveResearchKitMTM: ConfigureDH: MTMR using file "/home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/kinematic/mtmr.json"
+----> content of kinematic (GC) configuration file: 
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+	// see dVRK user guide
+	"DH" : 
+	{
+		"convention" : "standard",
+		"links" : 
+		[
+			{
+				"A" : 0,
+				"D" : 0,
+				"alpha" : 1.5708,
+				"ftmax" : 1.8608298599999999,
+				"mode" : "active",
+				// 1
+				"name" : "outer_yaw",
+				"offset" : -1.5708,
+				"qmax" : 0.69813199999999997, //  40.0 - manual says 0.783 but we can't reach that far
+				"qmin" : -1.13446, // -65   - manual says -1.277 but we can go further
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0.27939999999999998,
+				"D" : 0,
+				"alpha" : 0,
+				"ftmax" : 3.2166150600000001,
+				"mode" : "active",
+				// 2
+				"name" : "shoulder_pitch",
+				"offset" : -1.5708,
+				"qmax" : 1.13446, //  65.0 - manual says 1.1633 ~66.65, we're rounding down
+				"qmin" : -0.31415999999999999, // -18.0 - manual says -0.352 but we can't reach that far
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0.36449999999999999,
+				"D" : 0,
+				"alpha" : -1.5708,
+				"ftmax" : 1.9597828399999999,
+				"mode" : "active",
+				// 3
+				"name" : "elbow_pitch",
+				"offset" : 1.5708,
+				"qmax" : 0.61086499999999999, //  48.0 - manual says 0.73519 ~42.1 but we can go further
+				"qmin" : -0.87266500000000002, // -35.0 - manual says -0.2416 ~-13.84 but we can go further
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0,
+				"D" : 0.15060000000000001,
+				"alpha" : 1.5708,
+				"ftmax" : 0.30901338,
+				"mode" : "active",
+				// 4
+				"name" : "wrist_platform",
+				"offset" : 0,
+				"qmax" : 3.5779000000000001, //  205.0 - manual says 3.5997 ~206.2, we're rounding down
+				"qmin" : -1.6579999999999999, // -95.0 - manual says 1.6799 ~96.25, we're rounding down
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0,
+				"D" : 0,
+				"alpha" : -1.5708,
+				"ftmax" : 0.096843780000000004,
+				"mode" : "active",
+				// 5
+				"name" : "wrist_pitch",
+				"offset" : 0,
+				"qmax" : 3.2288000000000001, //  185.0 - manual says 3.2763 ~187.7, we're rounding down
+				"qmin" : -1.6579999999999999, // -95.0 - manual says -1.7055 ~-97.7 but we can't reach that far
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0,
+				"D" : 0,
+				"alpha" : 1.5708,
+				"ftmax" : 0.096843780000000004,
+				"mode" : "active",
+				// 6
+				"name" : "wrist_yaw",
+				"offset" : -1.5708,
+				"qmax" : 0.78539800000000004, //  45.0 - see above
+				"qmin" : -0.78539800000000004, // -45.0 - manual says -0.8194 ~-46.95 but we can't reach that far
+				"theta" : 0,
+				"type" : "revolute"
+			},
+			{
+				"A" : 0,
+				"D" : 0,
+				"alpha" : 0,
+				"ftmax" : 0.022875920000000001,
+				"mode" : "active",
+				// 7
+				"name" : "wrist_roll",
+				"offset" : 1.5708,
+				"qmax" : 7.85398, //  450.0
+				"qmin" : -8.37758, // -480.0
+				"theta" : 0,
+				"type" : "revolute"
+			}
+		]
+	},
+	"coupling" : 
+	{
+		"ActuatorToJointPosition" : 
+		[
+			[
+				1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				1,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				-1,
+				1,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				0.66969999999999996,
+				-0.66969999999999996,
+				1,
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				1,
+				0,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				0,
+				1,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1
+			]
+		]
+	}
+}
+<----
+M- Class mtsIntuitiveResearchKitMTM: ConfigureDH MTMR: loaded kinematics
+STANDARD DH       1.5708            0            0            0         hinge active       -1.5708     -1.13446     0.698132      1.86083
+STANDARD DH            0       0.2794            0            0         hinge active       -1.5708     -0.31416      1.13446      3.21662
+STANDARD DH      -1.5708       0.3645            0            0         hinge active        1.5708    -0.872665     0.610865      1.95978
+STANDARD DH       1.5708            0            0       0.1506         hinge active             0       -1.658       3.5779     0.309013
+STANDARD DH      -1.5708            0            0            0         hinge active             0       -1.658       3.2288    0.0968438
+STANDARD DH       1.5708            0            0            0         hinge active       -1.5708    -0.785398     0.785398    0.0968438
+STANDARD DH            0            0            0            0         hinge active        1.5708     -8.37758      7.85398    0.0228759
+
+M- Class mtsIntuitiveResearchKitMTM: ConfigureDH MTMR: saved base configuration file name: /home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/kinematic/mtmr.json
+M- Class mtsIntuitiveResearchKitMTM: ConfigureGC: MTMR using file "/home/pshao7/ros2_ws/src/dvrk/dvrk_config_jhu/jhu-dVRK/gc-MTMR-28247.json"
+----> content of gravity compensation (GC) configuration file: 
+{
+	"ARM_NAME" : "MTMR",
+	"GC_controller" : 
+	{
+		"GC_init_pos" : 
+		[
+			0,
+			0,
+			0,
+			0,
+			90,
+			0,
+			0
+		],
+		"db_vel_vec" : 
+		[
+			0.02,
+			0.02,
+			0.02,
+			0.01,
+			0.0080000000000000002,
+			0.0080000000000000002,
+			0.01
+		],
+		"fric_comp_ratio_vec" : 
+		[
+			0.69999999999999996,
+			0.01,
+			0.5,
+			0.40000000000000002,
+			0.20000000000000001,
+			0.20000000000000001,
+			1
+		],
+		"gc_dynamic_params_neg" : 
+		[
+			0.41177562152974984,
+			0.015832192391316981,
+			0.022975745415293566,
+			0.012348718302767649,
+			0.00039059867240795351,
+			-0.019661865961862802,
+			-0.010721156252936723,
+			-0.00039623808388530727,
+			0.0055878579930059057,
+			-0.00011826239028560992,
+			-0.071384855365715094,
+			0.11432456911658077,
+			-0.041801354434672131,
+			0.19594382582369252,
+			0.018069897361292289,
+			0.037188139546557863,
+			-3.5996083168649058,
+			0,
+			0,
+			0,
+			0.022387808965324885,
+			0.064595308682965341,
+			0.065839862556102052,
+			0.01777976045531432,
+			0.12737242130267046,
+			-0.032713390025530538,
+			0.017385485458693523,
+			0.022359208903717322,
+			0.0061072805850911861,
+			2.5634034374745491e-05,
+			0.03292082956514502,
+			-0.10040642977875339,
+			-0.018666379840648679,
+			0.021509536595383918,
+			-0.0024404904452574052,
+			-0.00077217544708971003,
+			-0.0019787002353773139,
+			-0.036779137765870773,
+			0.021869625415869325,
+			0.05865386595704785
+		],
+		"gc_dynamic_params_pos" : 
+		[
+			0.41177562152974984,
+			0.015832192391316981,
+			0.022975745415293566,
+			0.012348718302767649,
+			0.00039059867240795351,
+			-0.019661865961862802,
+			-0.010721156252936723,
+			-0.00039623808388530727,
+			0.0055878579930059057,
+			-0.00011826239028560992,
+			-0.023603403817383892,
+			0.14592433010501171,
+			-0.099322263353386286,
+			0.17915521763558395,
+			-0.065287893287046705,
+			0.15291616897693863,
+			-3.5625163279087939,
+			0,
+			0,
+			0,
+			0.057539191497650799,
+			0.091866809190328191,
+			-0.015429002277518646,
+			0.012437162927674411,
+			0.052727194939493072,
+			0.015213427938277532,
+			0.028258756712836421,
+			0.019838667505500545,
+			-0.00010208833053434625,
+			-0.0014990407088430451,
+			0.047258127442476081,
+			-0.099021376279324905,
+			-0.019310942277625451,
+			0.019226044262860623,
+			-0.00154100243928577,
+			0.0036025039041237463,
+			-0.0047689796056437205,
+			0.016239064923333001,
+			0.02902110187775786,
+			-0.0010872915055005793
+		],
+		"joint_position_lower_limit" : 
+		[
+			-20,
+			-14,
+			-34,
+			-190,
+			-85,
+			-40,
+			-400
+		],
+		"joint_position_upper_limit" : 
+		[
+			40,
+			40,
+			34,
+			80,
+			175,
+			40,
+			400
+		],
+		"safe_lower_torque_limit" : 
+		[
+			-0.13569000000000001,
+			0.24407999999999999,
+			0.049250000000000002,
+			-0.12834000000000001,
+			-0.048509999999999998,
+			-0.042569999999999997,
+			0
+		],
+		"safe_upper_torque_limit" : 
+		[
+			0.083849999999999994,
+			0.81620000000000004,
+			0.52668000000000004,
+			0.10306,
+			0.06787,
+			0.049939999999999998,
+			0
+		],
+		"sat_vec_vec" : 
+		[
+			0.20000000000000001,
+			0.20000000000000001,
+			0.20000000000000001,
+			0.20000000000000001,
+			0.20000000000000001,
+			0.20000000000000001,
+			0.20000000000000001
+		]
+	},
+	"SN" : "28247",
+	"date_time" : "February-26-2025-13-47-33",
+	"lse" : 
+	{
+		"g_constant" : 9.8100000000000005,
+		"isplot" : false,
+		"issave_figure" : false,
+		"joint1" : 
+		{
+			"fit_method" : "4POL"
+		},
+		"joint2" : 
+		{
+			"fit_method" : "1POL"
+		},
+		"joint3" : 
+		{
+			"fit_method" : "4POL"
+		},
+		"joint4" : 
+		{
+			"fit_method" : "4POL"
+		},
+		"joint5" : 
+		{
+			"fit_method" : "4POL"
+		},
+		"joint6" : 
+		{
+			"fit_method" : "4POL"
+		},
+		"std_filter" : 0.29999999999999999
+	},
+	"version" : "2.0"
+}
+<----
+M- ConfigurePID: can't find "pid" setting for arm "MTMR", using default: "pid/sawControllersPID-MTM.json"
+D- Class mtsPID: AddStateTable: added state table "Configuration" and corresponding interface "StateTableConfiguration" to task "MTMR-PID"
+M- Class mtsPID: MTMR-PID Configure: using /home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/pid/sawControllersPID-MTM.json
+M- Class mtsPID: Configure: MTMR-PID using file "/home/pshao7/ros2_ws/src/cisst-saw/sawIntuitiveResearchKit/core/components/../../share/pid/sawControllersPID-MTM.json"
+----> content of configuration file: 
+{
+	"pid" : 
+	[
+		{
+			"d_gain" : 10,
+			"disturbance_cutoff" : 10,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 0,
+			"name" : "outer_yaw",
+			"nominal_mass" : 0.001,
+			"p_gain" : 100,
+			"type" : "REVOLUTE",
+			"use_disturbance_observer" : true
+		},
+		{
+			"d_gain" : 5,
+			"disturbance_cutoff" : 10,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 1,
+			"name" : "shoulder_pitch",
+			"nominal_mass" : 0.001,
+			"p_gain" : 80,
+			"type" : "REVOLUTE",
+			"use_disturbance_observer" : true
+		},
+		{
+			"d_gain" : 5,
+			"disturbance_cutoff" : 10,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 2,
+			"name" : "elbow_pitch",
+			"nominal_mass" : 0.001,
+			"p_gain" : 80,
+			"type" : "REVOLUTE",
+			"use_disturbance_observer" : true
+		},
+		{
+			"d_gain" : 0.34999999999999998,
+			"disturbance_cutoff" : 15,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 3,
+			"name" : "wrist_platform",
+			"nominal_mass" : 0.001,
+			"p_gain" : 3,
+			"type" : "REVOLUTE",
+			"use_disturbance_observer" : true
+		},
+		{
+			"d_gain" : 0.070000000000000007,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 4,
+			"name" : "wrist_pitch",
+			"p_deadband" : 0.0080000000000000002,
+			"p_gain" : 2,
+			"type" : "REVOLUTE"
+		},
+		{
+			"d_gain" : 0.014999999999999999,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 5,
+			"name" : "wrist_yaw",
+			"p_deadband" : 0.014999999999999999,
+			"p_gain" : 0.40000000000000002,
+			"type" : "REVOLUTE"
+		},
+		{
+			"d_gain" : 0.0050000000000000001,
+			"i_forget_rate" : 0.98999999999999999,
+			"i_gain" : 0,
+			"i_limit" : 0,
+			"index" : 6,
+			"name" : "wrist_roll",
+			"p_deadband" : 0.02,
+			"p_gain" : 0.14999999999999999,
+			"type" : "REVOLUTE"
+		}
+	]
+}
+<----
+-M Class mtsPID: MTMR-PID reset_controller
+M- Class mtsRobot1394QtWidget: Configure: 
+M- Class mtsRobot1394QtWidget: Create: default create method for component "MTMR IO"
+M- Class mtsRobot1394QtWidget: Configure: 
+M- Class mtsRobot1394QtWidget: Create: default create method for component "MTMR-Gripper IO"
+M- Class mtsPIDQtWidget: Configure: 
+M- Class mtsIntuitiveResearchKitMTMQtWidget: Configure: 
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+-M Class mtsIntuitiveResearchKitMTM: RemoveInterfaceRequired: removed required interface "ExecIn"
+M- Class mtsIntuitiveResearchKitMTM: Create: creating thread for task MTMR
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class mtsRobot1394QtWidget: Create: default create method for component "MTMR IO"
+M- Class mtsIntuitiveResearchKitMTMQtWidget: Create: default create method for component "MTMR-GUI"
+M- Class mtsRobot1394QtWidget: Create: default create method for component "MTMR-Gripper IO"
+M- Class mtsPID: Create: getting thread from component io
+M- Class mtsPIDQtWidget: Create: default create method for component "MTMR-PID-GUI"
+-M Class mtsIntuitiveResearchKitConsole: RemoveInterfaceRequired: removed required interface "ExecIn"
+M- Class mtsIntuitiveResearchKitConsole: Create: creating thread for task console
+M- osaThread::CreateInternal: create thread named: Unnamed
+M-M- Class mtsIntuitiveResearchKitConsoleQtWidget: Create: default create method for component "consoleGUI"
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+ Class M-sIntuitiveResearchKitMTMat: Starting StartupInternal (periodic) for MTMR
+ Class M-sIntuitiveResearchKitMTMat: Starting StartupInternal (periodic) for MTMR
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class mtsIntuitiveResearchKitMTM: StartupInternal: started for task "MTMR"
+M- osaThread::CreateInternal: create thread named: Unnamed
+mtsIntuitiveResearchKitConsole: RunInternal: begin task console
+mtsIntuitiveResearchKitConsole: RunInternal: begin task console
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class mtsIntuitiveResearchKitConsole: StartupInternal: started for task "console"
+-M Class mtsIntuitiveResearchKitConsole: M- osaThread::CreateInternal: create thread named: Unnamed
+1.74579e+09s, #1: console started, dVRK 2.3.1 / cisst 1.3.1
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: M- osaThread::CreateInternal: create thread named: Unnamed
+s, #3: MTMR: desired state DISABLED
+-M Class mtsRobotIO1394: RemoveInterfaceRequired: removed required interface "ExecIn"
+M- Class mtsRobotIO1394: Create: creating thread for task io
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class mtsRobotIO1394QtWidgetFactory: Create: default create method for component "robotWidgetFactory"
+M- osaThread::CreateInternal: create thread named: Unnamed
+M-M- Class mtsIntuitiveResearchKitMTM: WaitForState: waiting for task "MTMR" to enter state "mtsComponentState
+  State:ready"
+ Class mtsRobotIO1394: Starting StartupInternal (periodic) for io
+M- Class M-mtsRobotIO1394 Class : mtsIntuitiveResearchKitConsoleStartupInternal: started for task ": StartupInternal: ended for task "ioconsole""
+M- Class M-mtsRobotIO1394 Class : mtsIntuitiveResearchKitConsoleStartupInternal: started for task ": StartupInternal: ended for task "ioconsole""
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+ Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #4: MTMR: current state DISABLED
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsRobotIO1394: StartupInternal: ended for task "io"
+-M Class mtsPID: RunEventHandler: initializing thread for MTMR-PID
+M- Class mtsPID: Starting StartupInternal (periodic) for MTMR-PID
+M- Class mtsPID: StartupInternal: started for task "MTMR-PID"
+M- Class mtsPID: Startup: configuration_js:
+M- Class mtsPID: Startup: configuration_js:
+M- Class mtsIntuitiveResearchKitMTM: WaitForState: waited for 0.000749111 seconds.
+M-M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR IO Class tate "tate: wmtsComponentState
+  State:readymtsIntuitiveResearchKitMTMponent
+			"name" : "outer_yaw",
+
+StartupInternal: ended for task "M- Class MTMRmtsIntuitiveResearchKitMTMQtWidget: WaitForState: called for component "MTMR-GUI"mtsComponentState
+  State:ready" has no effect for mtsComponent
+M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR-Gripper IO" for state "mtsComponentState
+  State:ready" has no effect for mtsComponent
+M- Class mtsPIDQtWidget: WaitForState: called for component "MTMR-PID-GUI" for state "mtsComponentState
+  State:ready" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: WaitForState: called for component "consoleGUI" for state "mtsComponentState
+  State:ready" has no effect for mtsComponent
+M- Class mtsRobotIO1394QtWidgetFactory: WaitForState: called for component "robotWidgetFactory" for state "mtsComponentState
+  State:ready" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitMTM: Start: starting task MTMR
+M- Class mtsIntuitiveResearchKitMTM: Start: started task MTMR
+M- Class mtsRobot1394QtWidget: Start: default start method for component "MTMR IO"
+M- Class mtsRobot1394QtWidget: Startup
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsIntuitiveResearchKitMTMQtWidget: Start: default start method for component "MTMR-GUI"
+M--M Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task " Class console"mtsIntuitiveResearchKitMTM
+1.74579e+09s, #5: MTMR: current state DISABLED
+
+M- Class mtsIntuitiveResearchKitConsole: RunInternal: wait to start task "console"
+M- Class mtsPID: StartupInternal: ended for task "MTMR-PID"
+M- Class mtsRobot1394QtWidget: Start: default start method for component "MTMR-Gripper IO"
+M- Class mtsRobot1394QtWidget: Startup
+M- Class mtsPID: Start: starting task MTMR-PID
+M- Class mtsPID: Start: started task MTMR-PID
+M- Class mtsPIDQtWidget: Start: default start method for component "MTMR-PID-GUI"
+M- Class mtsPIDQtWidget: mtsPIDQtWidget::Startup
+M- Class mtsIntuitiveResearchKitConsole: Start: starting task console
+M- Class mtsIntuitiveResearchKitConsole: Start: started task console
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: Start: default start method for component "consoleGUI"
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: mtsIntuitiveResearchKitConsoleQtWidget::Startup
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #2: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #3: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #4: MTMR: current state DISABLED
+M- Class mtsRobotIO1394: Start: starting task io
+M- Class mtsRobotIO1394: Start: started task io
+M- Class mtsRobotIO1394QtWidgetFactory: Start: default start method for component "robotWidgetFactory"
+M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR IO" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitMTMQtWidget: WaitForState: called for component "MTMR-GUI" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR-Gripper IO" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+M- Class mtsPIDQtWidget: WaitForState: called for component "MTMR-PID-GUI" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: WaitForState: called for component "consoleGUI" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+M- Class mtsRobotIO1394QtWidgetFactory: WaitForState: called for component "robotWidgetFactory" for state "mtsComponentState
+  State:active" has no effect for mtsComponent
+-E Class mtsRobotIO1394: io:MTMR: 1.74579e+09s, #1: IO: MTMR encoder overflow detected
+-E Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #1: IO: MTMR encoder overflow detected
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #5: console: clutch released
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #6: console: operator not present
+-M Class mtsPID: MTMR-PID:Controller: 1.74579e+09s, #1: MTMR-PID: received [IO: MTMR encoder overflow detected]
+console:Main: 1.74579e+09s, #7: console: camera released
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #8: MTMR-PID: received [IO: MTMR encoder overflow detected]
+-M Class mtsRobotIO1394: io:Configuration: 1.74579e+09s, #1: Closed all safety relays
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #9: Closed all safety relays
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #6: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #10: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #7: MTMR: power requested
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #11: MTMR: power requested-M
+ Class mtsIntuitiveResearchKitMTM: -M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #11: MTMR: power requested-M
+ Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #8: MTMR: current state POWERING
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #12: MTMR: current state POWERING
+-M Class mtsRobotIO1394: io:MTMR: 1.74579e+09s, #1: IO: MTMR watchdog ok
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #13: IO: MTMR watchdog ok
+-M Class mtsRobotIO1394: io:MTMR-Gripper: 1.74579e+09s, #1: IO: MTMR-Gripper watchdog ok
+-E Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #1: MTMR: failed to enable power
+-E Class mtsIntuitiveResearchKitConsole: -M Class mtsIntuitiveResearchKitMTM: : MTMR:Arm: 1.74579e+091.74579e+09s, #s, #92: : MTMR: desired state FAULT
+MTMR: failed to enable power
+-E Class mtsIntuitiveResearchKitConsole: -M Class mtsIntuitiveResearchKitMTM: : MTMR:Arm: 1.74579e+091.74579e+09s, #s, #92: : MTMR: desired state FAULT
+MTMR: failed to enable power
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #10: MTMR: current state FAULT
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #14: MTMR: desired state FAULT
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #15: MTMR: current state FAULT
+-E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: 1456 -  Explain: MTMR - Not a Si controller
+-E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: 1456 -  Explain: MTMR - Not a Si controller
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #11: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #16: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #12: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #17: MTMR: current state DISABLED
+-W Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #1: MTMR: command "home" is not supported in state "DISABLED (DISABLED)"
+-W Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #1: MTMR: command "home" is not supported in state "DISABLED (DISABLED)"
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #13: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #18: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #14: MTMR: power requested
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #19: MTMR: power requested
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #15: MTMR: current state POWERING
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #20: MTMR: current state POWERING
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #16: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #21: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #17: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #22: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #18: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #23: MTMR: desired state ENABLED
+-E Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #2: MTMR: failed to enable power
+-E-M Class  Class mtsIntuitiveResearchKitMTM: MTMR:Arm: mtsIntuitiveResearchKitConsole1.74579e+09s, #19: MTMR: desired state FAULT
+: console:Main: 1.74579e+09s, #3: MTMR: failed to enable power-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 
+1.74579e+09s, #console:Main: 1.74579e+09s, #3: MTMR: failed to enable power-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 
+1.74579e+09s, #20: MTMR: current state FAULT
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #24: MTMR: desired state FAULT
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #25: MTMR: current state FAULT
+-E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: 1456 -  Explain: MTMR - Not a Si controller
+-E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: 1456 -  Explain: MTMR - Not a Si controller
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #21: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: -M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+091.74579e+09s, #22: MTMR: current state DISABLED
+: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #27: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #23: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #28: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #24: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #29: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #25: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #30: MTMR: desired state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #26: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #31: MTMR: current state DISABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #27: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #32: MTMR: desired state ENABLED
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #28: MTMR: power requested
+-M Class mtsIntuitiveResearchKitConsole: console:Main: -M Class mtsIntuitiveResearchKitMTM: 1.74579e+09: s, #1.74579e+0933s, #: 29: MTMR: power requestedMTMR: current state POWERING
+
+-M Class mtsIntuitiveResearchKitConsole: console:Main: -M Class mtsIntuitiveResearchKitMTM: 1.74579e+09: s, #1.74579e+0933s, #: 29: MTMR: power requestedMTMR: current state POWERING
+
+-M Class mtsIntuitiveResearchKitConsole: console:Main: 1.74579e+09s, #34: MTMR: current state POWERING
+-E Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #3: MTMR: failed to enable power
+-E Class mtsIntuitiveResearchKitConsole-M:  Class mtsIntuitiveResearchKitMTM: console:MainMTMR:Arm: : 1.74579e+09s, #30: MTMR: desired state FAULT
+1.74579e+09: MTMR: failed to enable power
+-M Class mtsIntuitiveResearchKitMTM: MTMR:Arm: 1.74579e+09s, #31: MTMR: current state FAULT
+console:Main-E: 1.74579e+09s, #35 Class : MTMR: desired state FAULT
+mtsRobotIO1394: File: mtsRobot1394.cpp Line: 1456 - MTMR - Not a Si controller
+-E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: -M Class 1456mtsIntuitiveResearchKitConsole:  - console:Main:  1.74579e+09Explain: s, #36: MTMRMTMR: current state FAULT
+ - -E Class mtsRobotIO1394: File: mtsRobot1394.cpp Line: -M Class 1456mtsIntuitiveResearchKitConsole:  - console:Main:  1.74579e+09Explain: s, #36: MTMRMTMR: current state FAULT
+ - Not a Si controller
+W- cmnQtQApplicationExitsOnCtrlC_SignalHandler: exiting Qt Core Application
+M- Class mtsIntuitiveResearchKitMTM: Kill: task "MTMR", current state "mtsComponentState
+  State:active"
+M- Class mtsRobot1394QtWidget: Kill: default kill method for component "MTMR IO"
+-M Class mtsIntuitiveResearchKitMTMM- Class mtsIntuitiveResearchKitMTMQtWidget: : Kill: default kill method for component "MTMR-GUI"
+RunInternal: End of task M- Class mtsRobot1394QtWidget: Kill: default kill method for component "MTMR-Gripper IO"
+M- Class mtsPID: Kill: task "MTMR-PID", current state "mtsComponentState
+  State:active"
+M-M- Class mtsPIDQtWidget Class : Kill: default kill method for component "MTMR-PID-GUI"mtsIntuitiveResearchKitMTM
+: Cleanup
+: Cleanup
+M- Class mtsPIDQtWidget: mtsPIDQtWidget::Cleanup
+M- Class mtsIntuitiveResearchKitConsole: Kill: task "console", current state "mtsComponentState
+  State:active"
+M- Class mtsIntuitiveResearchKitConsole: Kill: task "console", current state "mtsComponentState
+  State:active"
+M- Class M- Class mtsIntuitiveResearchKitMTMsoleQtWidget: Kill: default kill method for component "consoleGUI: "
+
+M-RunInternal: end of task "console"
+M- Class mtsIntuitiveResearchKitConsole: Cleanup
+M- Class mtsIntuitiveResearchKitConsole: CleanupInternal: ended for task "console"
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: mtsIntuitiveResearchKitConsoleQtWidget::Cleanup
+M- Class mtsRobotIO1394: Kill: task "io", current state "mtsComponentState
+  State:active"
+-M Class mtsPID: ChangeStateEventHandler: calling Kill for MTMR-PID
+M- Class mtsPID: Kill: task "MTMR-PID", current state "mtsComponentState
+  State:finishing"
+M- Class mtsRobotIO1394QtWidgetFactory: Kill: default kill method for component "robotWidgetFactory"
+M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR IO" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitMTMQtWidget: WaitForState: called for component "MTMR-GUI" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+M- Class mtsRobot1394QtWidget: WaitForState: called for component "MTMR-Gripper IO" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+M- Class mtsPIDQtWidget: WaitForState: called for component "MTMR-PID-GUI" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+M- Class mtsIntuitiveResearchKitConsoleQtWidget: WaitForState: called for component "consoleGUI" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+-M Class mtsRobotIO1394: RunInternal: End of task io
+-M Class mtsPID: ChangeStateEventHandler: calling Kill for MTMR-PID
+M- Class mtsPID: Kill: task "MTMR-PID", current state "mtsComponentState
+  State:finishing"
+M- Class mtsRobotIO1394: CleanupInternal: ended for task "io"
+M- Class mtsRobotIO1394QtWidgetFactory: WaitForState: called for component "robotWidgetFactory" for state "mtsComponentState
+  State:finished" has no effect for mtsComponent
+M- Class cmnClassRegister: SetLogMaskClassAll: log mask has been set to "  " for the following classes: cmnBool, cmnChar, cmnCommandLineOptions, cmnDeSerializer, cmnDouble, cmnInt, cmnJointTypeProxy, cmnLoggerQtWidget, cmnLong, cmnLongLong, cmnPath, cmnSerializer, cmnShort, cmnUChar, cmnUInt, cmnULong, cmnULongLong, cmnUShort, cmnXMLPath, dvrk_console, mtsBool, mtsBool1, mtsBool2, mtsBool3, mtsBool4, mtsBool5, mtsBool6, mtsBoolMat, mtsBoolVec, mtsChar, mtsChar1, mtsChar2, mtsChar3, mtsChar4, mtsChar5, mtsChar6, mtsCharMat, mtsCharVec, mtsCollectorEvent, mtsCollectorFactory, mtsCollectorQtComponent, mtsCollectorQtFactory, mtsCollectorState, mtsComponent, mtsComponentAddLatency, mtsComponentConstructorArg, mtsComponentConstructorArgProxy, mtsComponentConstructorNameAndDouble, mtsComponentConstructorNameAndInt, mtsComponentConstructorNameAndLong, mtsComponentConstructorNameAndString, mtsComponentConstructorNameAndUInt, mtsComponentConstructorNameAndULong, mtsComponentStateChangeProxy, mtsComponentStateProxy, mtsComponentStatusControlProxy, mtsComponentViewer, mtsConnection, mtsDaVinciEndoscopeFocus, mtsDaVinciEndoscopeFocusQtWidget, mtsDaVinciHeadSensor, mtsDescriptionComponentClassProxy, mtsDescriptionComponentClassVecProxy, mtsDescriptionComponentProxy, mtsDescriptionConnectionProxy, mtsDescriptionConnectionVecProxy, mtsDescriptionInterfaceFullNameProxy, mtsDescriptionInterfaceFullNameVecProxy, mtsDescriptionInterfaceProxy, mtsDescriptionLoadLibraryProxy, mtsDouble, mtsDouble1, mtsDouble2, mtsDouble3, mtsDouble4, mtsDouble5, mtsDouble6, mtsDoubleAnRot2, mtsDoubleAxAnRot3, mtsDoubleFrm4x4, mtsDoubleMat, mtsDoubleMatFrm3, mtsDoubleMatRot2, mtsDoubleMatRot3, mtsDoubleQuat, mtsDoubleQuatFrm3, mtsDoubleQuatRot3, mtsDoubleRodRot3, mtsDoubleVec, mtsEndUserInterfaceArgProxy, mtsEventHandlerList, mtsExecutionResultProxy, mtsFloat, mtsFloat1, mtsFloat2, mtsFloat3, mtsFloat4, mtsFloat5, mtsFloat6, mtsFloatAnRot2, mtsFloatAxAnRot3, mtsFloatFrm4x4, mtsFloatMat, mtsFloatMatFrm3, mtsFloatMatRot2, mtsFloatMatRot3, mtsFloatQuat, mtsFloatQuatFrm3, mtsFloatQuatRot3, mtsFloatRodRot3, mtsFloatVec, mtsHIDHeadSensor, mtsHIDHeadSensorConfigurationProxy, mtsInt, mtsInt1, mtsInt2, mtsInt3, mtsInt4, mtsInt5, mtsInt6, mtsIntMat, mtsIntVec, mtsInterfaceProvided, mtsInterfaceProvidedDescriptionProxy, mtsInterfaceRequired, mtsInterfaceRequiredDescriptionProxy, mtsIntervalStatistics, mtsIntervalStatisticsQtWidgetComponent, mtsIntuitiveResearchKitArm, mtsIntuitiveResearchKitArmQtWidget, mtsIntuitiveResearchKitArmTypesProxy, mtsIntuitiveResearchKitConsole, mtsIntuitiveResearchKitConsoleQt, mtsIntuitiveResearchKitConsoleQtWidget, mtsIntuitiveResearchKitECM, mtsIntuitiveResearchKitECMQtWidget, mtsIntuitiveResearchKitEndoscopeTypesProxy, mtsIntuitiveResearchKitMTM, mtsIntuitiveResearchKitMTMQtWidget, mtsIntuitiveResearchKitPSM, mtsIntuitiveResearchKitPSMQtWidget, mtsIntuitiveResearchKitSUJ, mtsIntuitiveResearchKitSUJFixed, mtsIntuitiveResearchKitSUJQtWidget, mtsIntuitiveResearchKitSUJSi, mtsIntuitiveResearchKitToolDescriptionProxy, mtsIntuitiveResearchKitToolTypesProxy, mtsIntuitiveResearchKitUDPStreamer, mtsLogMessage, mtsLong, mtsLongLong, mtsLongMat, mtsLongVec, mtsManagerComponentBase, mtsManagerComponentClient, mtsManagerComponentServer, mtsManagerComponentServices, mtsManagerGlobal, mtsManagerGlobalInterface, mtsManagerLocal, mtsManagerLocalInterface, mtsMessageProxy, mtsMessageQtWidgetComponent, mtsPID, mtsPIDAxisConfigurationProxy, mtsPIDConfigurationProxy, mtsPIDQtWidget, mtsPSMCompensation, mtsQtApplication, mtsQtApplicationConstructorArg, mtsQtWidgetBoolRead, mtsQtWidgetBoolVecRead, mtsQtWidgetBoolVecWrite, mtsQtWidgetBoolWrite, mtsQtWidgetComponent, mtsQtWidgetDoubleRead, mtsQtWidgetDoubleVecRead, mtsQtWidgetDoubleVecWrite, mtsQtWidgetDoubleWrite, mtsQtWidgetEvent, mtsQtWidgetFunction, mtsQtWidgetIntRead, mtsQtWidgetIntWrite, mtsQtWidgetInterfaceRequired, mtsQtWidgetStateIndexRead, mtsQtWidgetStateIndexWrite, mtsQtWidgetStdStringRead, mtsQtWidgetStdStringWrite, mtsROSBridge, mtsRobot1394QtWidget, mtsRobotIO1394, mtsRobotIO1394QtWidgetFactory, mtsShort, mtsShortMat, mtsShortVec, mtsSocketBaseQtWidget, mtsSocketClientPSM, mtsSocketProxyClient, mtsSocketProxyClientConstructorArg, mtsSocketProxyInitData, mtsSocketProxyServer, mtsSocketProxyServerConstructorArg, mtsSocketServerPSM, mtsStateIndex, mtsStateTable, mtsStateTableIndexRange, mtsStdCharVecProxy, mtsStdDoubleVecProxy, mtsStdString, mtsStdStringListProxy, mtsStdStringVec, mtsStdStringVecProxy, mtsStdVct3VecProxy, mtsSystemQtWidgetComponent, mtsTask, mtsTaskConstructorArg, mtsTaskConstructorArgProxy, mtsTaskContinuous, mtsTaskContinuousConstructorArg, mtsTaskContinuousConstructorArgProxy, mtsTaskFromCallback, mtsTaskFromCallbackAdapter, mtsTaskFromSignal, mtsTaskMain, mtsTaskPeriodic, mtsTaskPeriodicConstructorArg, mtsTaskPeriodicConstructorArgProxy, mtsTeleOperationECM, mtsTeleOperationECMQtWidget, mtsTeleOperationPSM, mtsTeleOperationPSMQtWidget, mtsTextToSpeech, mtsUChar, mtsUChar1, mtsUChar2, mtsUChar3, mtsUChar4, mtsUChar5, mtsUChar6, mtsUCharMat, mtsUCharVec, mtsUInt, mtsUInt1, mtsUInt2, mtsUInt3, mtsUInt4, mtsUInt5, mtsUInt6, mtsUIntMat, mtsUIntVec, mtsULong, mtsULongMat, mtsULongVec, mtsUShort, mtsUShortMat, mtsUShortVec, mtsVct1, mtsVct2, mtsVct2x2, mtsVct3, mtsVct3x3, mtsVct4, mtsVct4x4, mtsVct5, mtsVct6, mtsVct7, mtsVct8, mtsVct9, mtsVctBool1, mtsVctBool2, mtsVctBool3, mtsVctBool4, mtsVctBool5, mtsVctBool6, mtsVctBool7, mtsVctBool8, mtsVctBool9, mtsVctBoolVec, mtsVctChar1, mtsVctChar2, mtsVctChar3, mtsVctChar4, mtsVctChar5, mtsVctChar6, mtsVctChar7, mtsVctChar8, mtsVctChar9, mtsVctCharVec, mtsVctDoubleMat, mtsVctDoubleVec, mtsVctFloat1, mtsVctFloat2, mtsVctFloat3, mtsVctFloat4, mtsVctFloat5, mtsVctFloat6, mtsVctFloat7, mtsVctFloat8, mtsVctFloat9, mtsVctFloatMat, mtsVctFloatVec, mtsVctFrm3, mtsVctFrm4x4, mtsVctInt1, mtsVctInt2, mtsVctInt3, mtsVctInt4, mtsVctInt5, mtsVctInt6, mtsVctInt7, mtsVctInt8, mtsVctInt9, mtsVctIntMat, mtsVctIntVec, mtsVctLong1, mtsVctLong2, mtsVctLong3, mtsVctLong4, mtsVctLong5, mtsVctLong6, mtsVctLong7, mtsVctLong8, mtsVctLong9, mtsVctLongVec, mtsVctMatRot3, mtsVctShort1, mtsVctShort2, mtsVctShort3, mtsVctShort4, mtsVctShort5, mtsVctShort6, mtsVctShort7, mtsVctShort8, mtsVctShort9, mtsVctShortVec, mtsVctUChar1, mtsVctUChar2, mtsVctUChar3, mtsVctUChar4, mtsVctUChar5, mtsVctUChar6, mtsVctUChar7, mtsVctUChar8, mtsVctUChar9, mtsVctUCharVec, mtsVctUInt1, mtsVctUInt2, mtsVctUInt3, mtsVctUInt4, mtsVctUInt5, mtsVctUInt6, mtsVctUInt7, mtsVctUInt8, mtsVctUInt9, mtsVctUIntVec, mtsVctULong1, mtsVctULong2, mtsVctULong3, mtsVctULong4, mtsVctULong5, mtsVctULong6, mtsVctULong7, mtsVctULong8, mtsVctULong9, mtsVctULongVec, mtsVctUShort1, mtsVctUShort2, mtsVctUShort3, mtsVctUShort4, mtsVctUShort5, mtsVctUShort6, mtsVctUShort7, mtsVctUShort8, mtsVctUShort9, mtsVctUShortVec, mtsWatchdogClient, mtsWatchdogServer, mts_ros_crtk_bridge_provided, mts_ros_crtk_bridge_required, mts_ros_crtk_controllers_pid_bridge, mts_ros_crtk_robot_io_bridge, osa1394Proxy, osaSerialPort, osaSocket, osaSocketServer, osaTimeServer, prmActuatorJointCouplingProxy, prmActuatorParameters, prmActuatorState, prmCameraInfo, prmCameraInfoProxy, prmCartesianImpedance, prmCartesianImpedanceHalfPlaneGainsProxy, prmCartesianImpedanceProxy, prmConfigurationJoint, prmConfigurationJointProxy, prmDepthMap, prmDepthMapProxy, prmEventButton, prmEventButtonQtWidgetComponent, prmForceCartesianGet, prmForceCartesianGetQtWidgetComponent, prmForceCartesianSet, prmForceTorqueJointSet, prmForceTorqueJointSetProxy, prmForwardKinematicsRequest, prmForwardKinematicsRequestProxy, prmForwardKinematicsResponse, prmForwardKinematicsResponseProxy, prmGainParameters, prmIMUSensors, prmIMUSensorsProxy, prmImageFrame, prmImageFrameProxy, prmInputData, prmInputDataProxy, prmInputDataQtWidgetComponent, prmInverseKinematicsRequest, prmInverseKinematicsRequestProxy, prmInverseKinematicsResponse, prmInverseKinematicsResponseProxy, prmKeyValueProxy, prmMaskedBoolVec, prmMaskedCharVec, prmMaskedDoubleVec, prmMaskedFloatVec, prmMaskedIntVec, prmMaskedLongVec, prmMaskedShortVec, prmMaskedUCharVec, prmMaskedUIntVec, prmMaskedULongVec, prmMaskedUShortVec, prmOperatingState, prmOperatingStateProxy, prmPositionCartesianArrayGet, prmPositionCartesianArrayGetProxy, prmPositionCartesianArrayGetQtWidget, prmPositionCartesianGet, prmPositionCartesianGetProxy, prmPositionCartesianSet, prmPositionCartesianSetProxy, prmPositionJointGet, prmPositionJointGetProxy, prmPositionJointSet, prmPositionJointSetProxy, prmRobotState, prmServoCartesian, prmServoCartesianProxy, prmServoJoint, prmServoJointProxy, prmStateCartesian, prmStateCartesianProxy, prmStateJoint, prmStateJointProxy, prmStateRobotQtWidgetComponent, prmVelocityCartesianGet, prmVelocityCartesianGetProxy, prmVelocityCartesianSet, prmVelocityJointGet, prmVelocityJointSet, sawRobotIO1394_osaActuator1394ConfigurationProxy, sawRobotIO1394_osaActuatorMappingProxy, sawRobotIO1394_osaAnalogBrake1394ConfigurationProxy, sawRobotIO1394_osaBrakeMappingProxy, sawRobotIO1394_osaDallasChip1394ConfigurationProxy, sawRobotIO1394_osaDigitalInput1394ConfigurationProxy, sawRobotIO1394_osaDigitalOutput1394ConfigurationProxy, sawRobotIO1394_osaDrive1394ConfigurationProxy, sawRobotIO1394_osaEncoder1394ConfigurationProxy, sawRobotIO1394_osaLimitsProxy, sawRobotIO1394_osaLinearFunctionProxy, sawRobotIO1394_osaPort1394ConfigurationProxy, sawRobotIO1394_osaPot1394ConfigurationProxy, sawRobotIO1394_osaPotTolerance1394ConfigurationProxy, sawRobotIO1394_osaRobot1394ConfigurationProxy, socketCommandPSMProxy, socketHeaderProxy, socketMessagesProxy, socketStatePSMProxy, 
+M- Class cmnLogger: SetMaskFunction: function mask set to "  "

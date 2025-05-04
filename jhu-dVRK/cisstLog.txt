@@ -1,0 +1,527 @@
+M- cisst 1.3.1 (git: 1.3.1-55-g217bdb44)
+M- CISST_ROOT: /home/pshao7/ros2_ws/install/cisst
+M- cisst share: /home/pshao7/ros2_ws/install/cisst/share/cisst-1.3
+M- cmn_m: 1, cmn_kg: 1, CISST_USE_SI_UNITS is set to 1
+M- Class cmnClassRegister: Register: class "osaSerialPort" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "osaSocket" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "osaSocketServer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "osaTimeServer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponent" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTask" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskContinuous" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskFromSignal" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsCollectorEvent" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsCollectorState" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsCollectorFactory" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndInt" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndUInt" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndLong" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndULong" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndDouble" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorNameAndString" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskPeriodic" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentAddLatency" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInterfaceProvided" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInterfaceRequired" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStateIndex" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStateTable" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStateTableIndexRange" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskMain" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskFromCallback" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskFromCallbackAdapter" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDouble" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsLong" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsLongLong" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsULong" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInt" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUInt" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsShort" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUShort" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsChar" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUChar" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBool" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdString" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdStringVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdDoubleVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdCharVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdStringListProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdVct3VecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "cmnJointTypeProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloat9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLong9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULong9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctInt9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUInt9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShort9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShort9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctChar9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUChar9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool1" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool5" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool6" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool7" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool8" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBool9" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct2x2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct3x3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVct4x4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctDoubleVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloatVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctBoolVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctUShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctLongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctULongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctDoubleMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFloatMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctIntMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctMatRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFrm3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsVctFrm4x4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleQuat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatQuat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleQuatRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatQuatRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleAxAnRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatAxAnRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleRodRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatRodRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleMatRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatMatRot3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleQuatFrm3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatQuatFrm3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleMatFrm3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatMatFrm3" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleFrm4x4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatFrm4x4" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleAnRot2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatAnRot2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleMatRot2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatMatRot2" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsLongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsULongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBoolVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsStdStringVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDoubleMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsFloatMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsLongMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsULongMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUIntMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsShortMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUShortMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsCharMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsUCharMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsBoolMat" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerGlobal" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerGlobalInterface" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerLocal" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerLocalInterface" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInterfaceProvidedDescriptionProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsInterfaceRequiredDescriptionProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentStateProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsExecutionResultProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionComponentProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionComponentClassProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionComponentClassVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionInterfaceProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionInterfaceFullNameProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionInterfaceFullNameVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionConnectionProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionConnectionVecProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentStatusControlProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentStateChangeProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsEndUserInterfaceArgProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsEventHandlerList" has been registered with Log LoD "-E D- M- W- E- "
+M- Class cmnClassRegister: Register: class "mtsDescriptionLoadLibraryProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsLogMessage" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsMessageProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskContinuousConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskPeriodicConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentViewer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketProxyClient" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketProxyServer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsConnection" has been registered with Log LoD "-E D- M- W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntervalStatistics" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerComponentBase" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerComponentClient" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerComponentServer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsManagerComponentServices" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketProxyClientConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketProxyInitData" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketProxyServerConstructorArg" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsWatchdogClient" has been registered with Log LoD "-E D- M- W- E- "
+M- Class cmnClassRegister: Register: class "mtsWatchdogServer" has been registered with Log LoD "-E D- M- W- E- "
+M- Class cmnClassRegister: Register: class "mtsComponentConstructorArgProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskConstructorArgProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskContinuousConstructorArgProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTaskPeriodicConstructorArgProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmActuatorParameters" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmActuatorState" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmEventButton" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForceCartesianGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForceCartesianSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForceTorqueJointSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmGainParameters" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedDoubleVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedFloatVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedLongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedULongVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedUIntVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedUShortVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedUCharVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmMaskedBoolVec" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianArrayGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionJointGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionJointSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmRobotState" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmVelocityCartesianGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmVelocityCartesianSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmVelocityJointGet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmVelocityJointSet" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmCartesianImpedance" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmIMUSensors" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmConfigurationJoint" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmStateJoint" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmStateCartesian" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmServoJoint" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmServoCartesian" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInputData" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmOperatingState" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmImageFrame" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmCameraInfo" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmDepthMap" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForwardKinematicsRequest" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForwardKinematicsResponse" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInverseKinematicsRequest" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInverseKinematicsResponse" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmActuatorJointCouplingProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmCameraInfoProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmCartesianImpedanceHalfPlaneGainsProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmCartesianImpedanceProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmConfigurationJointProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmDepthMapProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForceTorqueJointSetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForwardKinematicsRequestProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmForwardKinematicsResponseProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmIMUSensorsProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmImageFrameProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInputDataProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInverseKinematicsRequestProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmInverseKinematicsResponseProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmKeyValueProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmOperatingStateProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianArrayGetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianGetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionCartesianSetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionJointGetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmPositionJointSetProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmServoCartesianProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmServoJointProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmStateCartesianProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmStateJointProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "prmVelocityCartesianGetProxy" has been registered with Log LoD "-W -E W- E- "
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- Class cmnClassRegister: Register: class "cmnXMLPath" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsPID" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsPIDAxisConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsPIDConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsRobotIO1394" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaLinearFunctionProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaLimitsProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaDrive1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaEncoder1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaPot1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaAnalogBrake1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaActuator1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaPotTolerance1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "osa1394Proxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaRobot1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaDigitalInput1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaDigitalOutput1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaDallasChip1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaPort1394ConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaActuatorMappingProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "sawRobotIO1394_osaBrakeMappingProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTextToSpeech" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitArm" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitMTM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitPSM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitECM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitSUJ" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitSUJSi" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitSUJFixed" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTeleOperationPSM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsTeleOperationECM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitConsole" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDaVinciHeadSensor" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsDaVinciEndoscopeFocus" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitUDPStreamer" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketClientPSM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsSocketServerPSM" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsPSMCompensation" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsHIDHeadSensor" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitArmTypesProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitToolTypesProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitToolDescriptionProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsIntuitiveResearchKitEndoscopeTypesProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "socketMessagesProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "socketHeaderProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "socketStatePSMProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "socketCommandPSMProxy" has been registered with Log LoD "-W -E W- E- "
+M- Class cmnClassRegister: Register: class "mtsHIDHeadSensorConfigurationProxy" has been registered with Log LoD "-W -E W- E- "
+M- osaDynamicLoader: loading libsawIntuitiveResearchKit.so
+-W mtsEventReceiverBase: Creating local thread signal for event ConnectResult
+FirewirePort::Init: number of ports = 1
+  Port 0: /dev/fw8, 9 nodes
+FirewirePort::Init: successfully initialized port 0
+Using libraw1394 version 2.1.2
+FirewirePort::Init: successfully disabled cycle start packet
+FirewirePort::InitNodes: base node id = ffc0
+BasePort::ScanNodes: building node map for 8 nodes:
+  Node 0, BoardId = 8, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 1, BoardId = 9, FPGA_V2, Hardware = QLA1, Firmware Version = 8
+  Node 2, BoardId = 7, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 3, BoardId = 6, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 4, BoardId = 0, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 5, BoardId = 1, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 6, BoardId = 2, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+  Node 7, BoardId = 3, FPGA_V1, Hardware = QLA1, Firmware Version = 8
+BasePort::ScanNodes: found 8 boards
+BasePort::SetDefaultProtocol: all nodes broadcast capable and support shorter wait
+BasePort::SetProtocol: system running with broadcast write
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis 6 for robot 1 (MTML)
+W- Class mtsRobotIO1394: SetBoards: MTML, board: 0, Id: 0, firmware: 8, FPGA serial: ~, QLA serial: unknown
+W- Class mtsRobotIO1394: SetBoards: MTML, board: 1, Id: 1, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis -12345 for robot 1 (MTML-Gripper)
+W- Class mtsRobotIO1394: SetBoards: MTML-Gripper, board: 0, Id: 1, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis 6 for robot 1 (MTMR)
+W- Class mtsRobotIO1394: SetBoards: MTMR, board: 0, Id: 2, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: SetBoards: MTMR, board: 1, Id: 3, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+W- Configure: potentiometer to encoder latency (0) and/or distance (0) set to zero, safety check is DISABLED for Axis -12345 for robot 1 (MTMR-Gripper)
+W- Class mtsRobotIO1394: SetBoards: MTMR-Gripper, board: 0, Id: 3, firmware: 8, FPGA serial: unknown, QLA serial: unknown
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+W- Class mtsRobotIO1394: SetBoards: PSM2, board: 0, Id: 8, firmware: 8, FPGA serial: 4652-77, QLA serial: unknown
+W- Class mtsRobotIO1394: SetBoards: PSM2, board: 1, Id: 9, firmware: 8, FPGA serial: 5496-06, QLA serial: 5495-06
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+W- Class mtsRobotIO1394: mtsRobot1394::SetBoards
+----------------------------------------------------
+ Suggestion:
+   Please upgrade all boards firmware to version 9.
+   Lowest version found is 8.
+----------------------------------------------------
+ To upgrade (or downgrade) the FPGA firmware, please follow instructions from:
+  https://github.com/jhu-cisst/mechatronics-firmware/wiki/FPGA-Program
+----------------------------------------------------
+M- ConfigurePID: can't find "pid" setting for arm "MTML", using default: "pid/sawControllersPID-MTM.json"
+M- ConfigurePID: can't find "pid" setting for arm "MTMR", using default: "pid/sawControllersPID-MTM.json"
+M- ConfigurePID: can't find "pid" setting for arm "PSM2", using default: "pid/sawControllersPID-PSM.json"
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+M- osaThread::CreateInternal: create thread named: Unnamed
+-W Class mtsPID: MTMR-PID:Controller: 1.74637e+09s, #1: MTMR-PID: position limit, mask (1 for limit):            1            0            0            0            0            0            0
+-W Class mtsPID: MTMR-PID: position limit, mask (1 for limit):            1            0            0            0            0            0            0, 
+ requested: -W    0.698132    -0.175757     0.134628      1.63817      1.68207    -0.339025 Class       3.77782mtsIntuitiveResearchKitConsole, 
+ lower limits: :     -1.13446    -0.314159    -0.261799dvrkServer:Main :     -2.09440     -1.65806    -0.785398     -8.29031, 
+ upper limits: 1.74637e+09    0.698132      1.13446s, # 1    0.733038:  MTMR-PID: position limit, mask (1 for limit):            1            0            0            0            0            0            0     4.18879
+     3.22886-W Class mtsPID: MTMR-PID: position limit, mask (1 for limit):            1            0            0            0            0            0            0, 
+ requested: -W    0.698132    -0.175757     0.134628      1.63817      1.68207    -0.339025 Class       3.77782mtsIntuitiveResearchKitConsole, 
+ lower limits: :     -1.13446    -0.314159    -0.261799dvrkServer:Main :     -2.09440     -1.65806    -0.785398     -8.29031, 
+ upper limits: 1.74637e+09    0.698132      1.13446s, # 1    0.733038:  MTMR-PID: position limit, mask (1 for limit):            1            0            0            0            0            0            0     4.18879
+     3.22886     0.785398      7.76672

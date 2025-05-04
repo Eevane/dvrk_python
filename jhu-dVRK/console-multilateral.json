@@ -1,0 +1,29 @@
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+    "io":
+    {
+       "footpedals": "io/sawRobotIO1394-MTMR-foot-pedals.xml"
+    }
+    ,
+    "arms":
+    [
+        {
+            "name": "PSM2",
+            "type": "PSM",
+            "serial": "27374"
+        }
+        ,
+        {
+            "name": "MTML",
+            "type": "MTM",
+            "serial": "22723",
+            "base-frame": {
+                "reference-frame": "HRSV",
+                "transform": [[  -1.0,  0.0,          0.0,          0.0],
+                              [  0.0,  -1.0,          0.0,          0.0],
+                              [  0.0,  0.0,          1.0,          0.0],
+                              [  0.0,  0.0,          0.0,          1.0]]
+           }
+        }
+    ]
+}

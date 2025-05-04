@@ -1,0 +1,9 @@
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+    "kinematic": "kinematic/psm.json"
+    , "generation": "Classic"
+    //, "tool-detection": "AUTOMATIC"
+    //, "tool-detection": "MANUAL"
+    ,"tool-detection": "FIXED",
+     "tool": "RESANO_FORCEPS:400181"
+}

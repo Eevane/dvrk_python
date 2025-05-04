@@ -1,0 +1,38 @@
+/* -*- Mode: Javascript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+{
+    "io":
+    {
+        "footpedals": "io/sawRobotIO1394-MTMR-foot-pedals-DQLA.xml"
+        , "firewire-protocol": "broadcast-query-read-write" // for debugging,
+        , "port": "udpfw"
+    }
+    ,
+    "arms":
+    [
+        {
+            "name": "MTML2",
+            "type": "MTM",
+            "serial": "34863",
+            "base-frame": {
+                "reference-frame": "HRSV",
+                "transform": [[ -1.0,  0.0,          0.0,          0.180],
+                              [  0.0,  0.866025404,  0.5,          0.400],
+                              [  0.0,  0.5,         -0.866025404,  0.475],
+                              [  0.0,  0.0,          0.0,          1.0]]
+            }
+        }
+        ,
+        {
+            "name": "MTMR2",
+            "type": "MTM",
+            "serial": "32336",
+            "base-frame": {
+                "reference-frame": "HRSV",
+                "transform": [[ -1.0,  0.0,          0.0,         -0.180],
+                              [  0.0,  0.866025404,  0.5,          0.400],
+                              [  0.0,  0.5,         -0.866025404,  0.475],
+                              [  0.0,  0.0,          0.0,          1.0]]
+            }
+        }
+    ]
+}
